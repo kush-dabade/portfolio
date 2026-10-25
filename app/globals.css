@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+/* Theme is class-driven: `.dark` on <html>, set before paint in app/layout.tsx. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Palette
+   canvas → inset → raised is the surface ladder; ink, ink-2 and ink-3 are the
+   three text weights; line is the hairline everything is drawn with.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --canvas: #ffffff;
+  --inset: #f6f7f8;
+  --raised: #f0f1f3;
+
+  --ink: #0b0c0e;
+  --ink-2: #474a52;
+  --ink-3: #696d76;
+
+  --line: #e1e2e5;
+  --line-strong: rgb(0 0 0 / 0.18);
+  --grid: rgb(0 0 0 / 0.06);
+
+  --wash: rgb(0 0 0 / 0.035);
+  --chip: rgb(0 0 0 / 0.045);
+  --chip-ink: #474a52;
+
+  --accent: #2563eb;
+  --accent-soft: rgb(37 99 235 / 0.08);
+  --accent-line: rgb(37 99 235 / 0.35);
+  --ok: #15803d;
+  --warn: #b45309;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --canvas: #08090a;
+  --inset: #0d0e10;
+  --raised: #131418;
+
+  --ink: #f3f4f6;
+  --ink-2: #a3a6ae;
+  --ink-3: #7c808a;
+
+  --line: #1e1f23;
+  --line-strong: rgb(255 255 255 / 0.16);
+  --grid: rgb(255 255 255 / 0.045);
+
+  --wash: rgb(255 255 255 / 0.03);
+  --chip: rgb(255 255 255 / 0.05);
+  --chip-ink: #a3a6ae;
+
+  --accent: #6ea8fe;
+  --accent-soft: rgb(110 168 254 / 0.08);
+  --accent-line: rgb(110 168 254 / 0.4);
+  --ok: #4ade80;
+  --warn: #fbbf24;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-inset: var(--inset);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-wash: var(--wash);
+  --color-chip: var(--chip);
+  --color-chip-ink: var(--chip-ink);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+/* ---------------------------------------------------------------------------
+   Base — kept in a layer so utility classes always win over it.
+   --------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    /* Room for the 56px sticky header when jumping to a section. */
+    scroll-padding-top: 4.5rem;
+    background: var(--canvas);
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-feature-settings: "cv11", "ss01", "ss03";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a,
+  button {
+    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, opacity 150ms ease, translate 150ms ease;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--canvas);
+  }
+
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) var(--canvas);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Patterns
+   --------------------------------------------------------------------------- */
+
+/* Hero blueprint: fine 24px cells with a heavier line every 96px, faded out at the edges. */
+.blueprint {
+  --cell: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-image: var(--cell), var(--cell);
+  background-size: 24px 24px, 24px 24px, 96px 96px, 96px 96px;
+  background-position: -1px -1px;
+  mask-image: radial-gradient(ellipse 80% 75% at 70% 40%, black 30%, transparent 85%);
+}
+
+/* Section breaks: a faint dot field between two hairlines. */
+.dot-field {
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1.2px);
+  background-size: 12px 12px;
+  background-position: center;
+  mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+   Theme switch — the new theme grows as a circle from wherever the toggle was
+   pressed (--switch-x / --switch-y are set by components/theme-provider.tsx).
+   --------------------------------------------------------------------------- */
+
+::view-transition-group(root) {
+  animation-duration: 500ms;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: theme-reveal 500ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--switch-x, 100%) var(--switch-y, 0));
+  }
+
+  to {
+    clip-path: circle(var(--switch-r, 150vmax) at var(--switch-x, 100%) var(--switch-y, 0));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
