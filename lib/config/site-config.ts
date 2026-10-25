@@ -17,11 +17,11 @@ export const siteConfig = {
     hero: {
         headline: "Building full-stack products, from idea to implementation.",
         intro:
-            "I build web applications with React, TypeScript, Node.js and PostgreSQL, with a growing focus on backend architecture and cloud infrastructure. I like turning ideas into working products — and understanding the engineering decisions behind them.",
+            "I build web applications with React, TypeScript, Node.js and PostgreSQL, with a growing focus on backend architecture and cloud infrastructure. I enjoy turning ideas into working products and understanding the engineering decisions behind them.",
     },
 
     about: [
-        "I'm a Computer Science student at MIT World Peace University, Pune, interested in building useful software and understanding how it works beneath the interface. I enjoy working across the stack — especially designing APIs, modelling relational data, and connecting backend systems to clean, usable frontends.",
+        "I'm a Computer Science student at MIT World Peace University, Pune, interested in building useful software and understanding how it works beneath the interface. I like working across the stack — especially designing APIs, modelling relational data, and connecting backend systems to clean, usable frontends.",
         "TeamOS has been my chance to explore that on a larger application: multi-tenant architecture, background jobs and realtime features. I'm continuing to grow in backend engineering, system design and cloud infrastructure by building and improving real projects.",
     ],
 

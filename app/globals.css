@@ -5,80 +5,85 @@
 
 /* ---------------------------------------------------------------------------
    Palette
-   canvas → inset → raised is the surface ladder; ink, ink-2 and ink-3 are the
-   three text weights; line is the hairline everything is drawn with.
+   canvas → inset → raised is the surface ladder; `surface` is what frames and
+   cards sit on. ink, ink-2 and ink-3 are the three text weights (ink-3 still
+   clears 4.5:1 on every surface); line is the hairline everything is drawn
+   with. One accent — an electric ultramarine — and two status colours.
    --------------------------------------------------------------------------- */
 
 :root {
-  --canvas: #ffffff;
-  --inset: #f6f7f8;
-  --raised: #f0f1f3;
+  --canvas: #fafaf9;
+  --inset: #f3f3f1;
+  --raised: #ebebe8;
+  --surface: #ffffff;
 
-  --ink: #0b0c0e;
-  --ink-2: #474a52;
-  --ink-3: #696d76;
+  --ink: #0b0b0d;
+  --ink-2: #45464d;
+  --ink-3: #66686f;
 
-  --line: #e1e2e5;
-  --line-strong: rgb(0 0 0 / 0.18);
-  --grid: rgb(0 0 0 / 0.06);
-
+  --line: #e0e0dc;
+  --line-strong: rgb(0 0 0 / 0.16);
+  --grid: rgb(0 0 0 / 0.055);
   --wash: rgb(0 0 0 / 0.035);
-  --chip: rgb(0 0 0 / 0.045);
-  --chip-ink: #474a52;
 
-  --accent: #2563eb;
-  --accent-soft: rgb(37 99 235 / 0.08);
-  --accent-line: rgb(37 99 235 / 0.35);
+  --accent: #2e4dff;
+  --accent-soft: rgb(46 77 255 / 0.08);
+  --accent-line: rgb(46 77 255 / 0.42);
   --ok: #15803d;
   --warn: #b45309;
+
+  --shadow-frame: 0 1px 2px rgb(16 18 27 / 0.06), 0 28px 56px -28px rgb(16 18 27 / 0.28);
 }
 
 .dark {
   color-scheme: dark;
 
-  --canvas: #08090a;
-  --inset: #0d0e10;
-  --raised: #131418;
+  --canvas: #09090b;
+  --inset: #0d0e11;
+  --raised: #16171b;
+  --surface: #111215;
 
-  --ink: #f3f4f6;
-  --ink-2: #a3a6ae;
-  --ink-3: #7c808a;
+  --ink: #f4f4f5;
+  --ink-2: #a3a5ad;
+  --ink-3: #80828c;
 
-  --line: #1e1f23;
-  --line-strong: rgb(255 255 255 / 0.16);
+  --line: #1f2024;
+  --line-strong: rgb(255 255 255 / 0.15);
   --grid: rgb(255 255 255 / 0.045);
-
   --wash: rgb(255 255 255 / 0.03);
-  --chip: rgb(255 255 255 / 0.05);
-  --chip-ink: #a3a6ae;
 
-  --accent: #6ea8fe;
-  --accent-soft: rgb(110 168 254 / 0.08);
-  --accent-line: rgb(110 168 254 / 0.4);
+  --accent: #7c94ff;
+  --accent-soft: rgb(124 148 255 / 0.1);
+  --accent-line: rgb(124 148 255 / 0.45);
   --ok: #4ade80;
   --warn: #fbbf24;
+
+  --shadow-frame: 0 0 0 1px rgb(255 255 255 / 0.02), 0 32px 64px -32px rgb(0 0 0 / 0.9);
 }
 
 @theme inline {
   --color-canvas: var(--canvas);
   --color-inset: var(--inset);
   --color-raised: var(--raised);
+  --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-wash: var(--wash);
-  --color-chip: var(--chip);
-  --color-chip-ink: var(--chip-ink);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --color-accent-line: var(--accent-line);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
 
+  --shadow-frame: var(--shadow-frame);
+
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ---------------------------------------------------------------------------
@@ -90,6 +95,8 @@
     /* Room for the 56px sticky header when jumping to a section. */
     scroll-padding-top: 4.5rem;
     background: var(--canvas);
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) var(--canvas);
   }
 
   body {
@@ -99,6 +106,9 @@
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.6;
+    /* Inter's optical-size axis is loaded, so large headings get the tighter
+       display cut automatically. */
+    font-optical-sizing: auto;
     font-feature-settings: "cv11", "ss01", "ss03";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -114,13 +124,16 @@
     text-wrap: balance;
   }
 
-  p {
+  p,
+  li,
+  dd {
     text-wrap: pretty;
   }
 
   a,
   button {
     transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, opacity 150ms ease, translate 150ms ease;
+    -webkit-tap-highlight-color: transparent;
   }
 
   button:not(:disabled) {
@@ -137,37 +150,125 @@
     background: var(--accent);
     color: var(--canvas);
   }
-
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: var(--line-strong) var(--canvas);
-  }
 }
 
 /* ---------------------------------------------------------------------------
    Patterns
    --------------------------------------------------------------------------- */
 
-/* Hero blueprint: fine 24px cells with a heavier line every 96px, faded out at the edges. */
-.blueprint {
-  --cell: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-image: var(--cell), var(--cell);
-  background-size: 24px 24px, 24px 24px, 96px 96px, 96px 96px;
-  background-position: -1px -1px;
-  mask-image: radial-gradient(ellipse 80% 75% at 70% 40%, black 30%, transparent 85%);
+@layer components {
+  /* Drawing-sheet grid: fine 24px cells with a heavier line every 96px. */
+  .blueprint {
+    --cell: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-image: var(--cell), var(--cell);
+    background-size: 24px 24px, 24px 24px, 96px 96px, 96px 96px;
+    background-position: -1px -1px;
+  }
+
+  .fade-right {
+    mask-image: radial-gradient(ellipse 75% 85% at 85% 30%, black 20%, transparent 80%);
+  }
+
+  .fade-edges {
+    mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 40%, transparent 95%);
+  }
+
+  /* Underline that draws in from the left on hover — used for large text links. */
+  .draw-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 450ms var(--ease-out-soft), color 150ms ease;
+  }
+
+  .draw-underline:hover,
+  .draw-underline:focus-visible {
+    background-size: 100% 1px;
+  }
 }
 
-/* Section breaks: a faint dot field between two hairlines. */
-.dot-field {
-  background-image: radial-gradient(var(--line-strong) 1px, transparent 1.2px);
-  background-size: 12px 12px;
-  background-position: center;
-  mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+/* ---------------------------------------------------------------------------
+   Motion
+   Hero lines rise on first paint with plain CSS, so they never wait for JS.
+   Everything else uses [data-reveal]: components/reveal-observer.tsx marks
+   what is already on screen as shown, then adds .reveal-on to <html> — only
+   from that point can anything start hidden. Without JS, nothing is hidden.
+   --------------------------------------------------------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 0.6rem;
+  }
+}
+
+.rise {
+  animation: rise 900ms var(--ease-out-soft) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 60ms);
+}
+
+@layer components {
+  [data-reveal] {
+    transition: opacity 700ms var(--ease-out-soft) var(--reveal-delay, 0s), translate 900ms var(--ease-out-soft) var(--reveal-delay, 0s);
+  }
+
+  .reveal-on [data-reveal]:not([data-shown]) {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+
+  /* Project imagery: the frame settles while the picture inside eases back to scale. */
+  [data-reveal="frame"] img {
+    transition: scale 1400ms var(--ease-out-soft) var(--reveal-delay, 0s);
+  }
+
+  .reveal-on [data-reveal="frame"]:not([data-shown]) {
+    translate: 0 2rem;
+  }
+
+  .reveal-on [data-reveal="frame"]:not([data-shown]) img {
+    scale: 1.04;
+  }
+}
+
+/* Header: transparent over the hero, solid once the page moves. Browsers
+   without scroll-driven animations simply keep it solid. */
+@supports (animation-timeline: scroll()) {
+  .site-header {
+    animation: header-settle linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 64px;
+  }
+
+  @keyframes header-settle {
+    from {
+      background-color: transparent;
+      border-bottom-color: transparent;
+    }
+  }
+
+  .scroll-progress {
+    display: block;
+    transform-origin: left;
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes scroll-progress {
+    from {
+      scale: 0 1;
+    }
+
+    to {
+      scale: 1 1;
+    }
+  }
 }
 
 /* ---------------------------------------------------------------------------
    Theme switch — the new theme grows as a circle from wherever the toggle was
-   pressed (--switch-x / --switch-y are set by components/theme-provider.tsx).
+   pressed (--switch-x / --switch-y are set by components/theme.tsx).
    --------------------------------------------------------------------------- */
 
 ::view-transition-group(root) {
@@ -207,5 +308,20 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .reveal-on [data-reveal]:not([data-shown]),
+  .reveal-on [data-reveal="frame"]:not([data-shown]) {
+    translate: none;
+  }
+
+  .reveal-on [data-reveal="frame"]:not([data-shown]) img {
+    scale: none;
+  }
+
+  /* Scroll-linked, not time-based: the global rule above would freeze it. */
+  .site-header,
+  .scroll-progress {
+    animation-duration: auto !important;
   }
 }

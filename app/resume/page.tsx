@@ -3,7 +3,8 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import SectionBreak from "@/components/section-break";
-import { Rails } from "@/components/section";
+import { Rails, SectionLabel, gutter } from "@/components/section";
+import { buttonPrimary, buttonSecondary } from "@/components/ui";
 import ResumeButton from "@/components/resume-button";
 import ResumeViewer from "@/components/resume/resume-viewer-loader";
 import { siteConfig } from "@/lib/config/site-config";
@@ -21,38 +22,28 @@ export default function ResumeRoute() {
   return (
     <>
       <Rails>
-        <div className="flex flex-col justify-between gap-6 px-5 pb-10 pt-12 sm:flex-row sm:items-end sm:px-10 sm:pt-16">
+        <div className={`flex flex-col justify-between gap-8 pb-10 pt-12 sm:pt-16 lg:flex-row lg:items-end lg:pb-12 lg:pt-20 ${gutter}`}>
           <div>
             <Link
               href="/"
-              className="mb-6 inline-flex items-center gap-1.5 font-mono text-xs text-ink-3 hover:text-ink"
+              className="group mb-8 inline-flex items-center gap-1.5 text-sm text-ink-2 hover:text-ink"
             >
-              <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+              <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" aria-hidden="true" />
               Back home
             </Link>
-            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-              Curriculum vitae
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+            <SectionLabel index="PDF">Curriculum vitae</SectionLabel>
+            <h1 className="mt-5 text-[clamp(2.4rem,1.6rem+3.4vw,4.5rem)] font-semibold leading-[1] tracking-[-0.045em] text-ink">
               Résumé
             </h1>
-            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-2">
+            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink-2">
               {siteConfig.name} · {siteConfig.education.degree}, {siteConfig.education.institution}, {siteConfig.education.location}.
             </p>
           </div>
 
           {available && (
             <div className="flex shrink-0 flex-wrap gap-2">
-              <ResumeButton
-                available
-                className="inline-flex items-center gap-2 rounded-md bg-ink px-4 py-2.5 text-sm font-medium text-canvas hover:opacity-90"
-              />
-              <a
-                href={siteConfig.resume.file}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border border-line-strong px-4 py-2.5 text-sm font-medium text-ink hover:bg-raised"
-              >
+              <ResumeButton available className={buttonPrimary} />
+              <a href={siteConfig.resume.file} target="_blank" rel="noreferrer" className={buttonSecondary}>
                 <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 Open in new tab
               </a>
@@ -61,8 +52,9 @@ export default function ResumeRoute() {
         </div>
       </Rails>
 
-      <Rails className="border-t border-line bg-inset/40">
-        <div className="p-4 sm:p-8">
+      <Rails className="relative border-t border-line bg-inset">
+        <div className="blueprint fade-edges pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="relative p-3 sm:p-8 lg:p-12">
           {available ? (
             <ResumeViewer />
           ) : (

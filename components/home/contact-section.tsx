@@ -1,12 +1,13 @@
-import { ArrowUpRight, FileText, Mail } from "lucide-react";
+import { ArrowRight, ArrowUpRight, FileText } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
 import { siteConfig } from "@/lib/config/site-config";
-import Section, { Rails } from "../section";
+import { Rails, SectionLabel, gutter } from "../section";
 import Reveal from "../reveal";
 import CopyEmailButton from "../copy-email-button";
+import { nudgeOut, nudgeRight } from "../ui";
 
-const ChannelRow = ({
+const Channel = ({
     href,
     external = false,
     icon,
@@ -19,21 +20,19 @@ const ChannelRow = ({
     label: string;
     value: string;
 }) => {
-    const className =
-        "group flex items-center gap-4 px-5 py-4 hover:bg-wash sm:px-8";
+    const className = `group flex h-full items-center gap-4 py-6 hover:bg-wash ${gutter}`;
     const content = (
         <>
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-line bg-raised text-ink-2 group-hover:text-ink">
-                {icon}
-            </span>
+            <span className="text-ink-2 group-hover:text-ink">{icon}</span>
             <span className="min-w-0 flex-1">
-                <span className="block font-mono text-[11px] text-ink-3">{label}</span>
-                <span className="block truncate text-sm text-ink">{value}</span>
+                <span className="block text-[15px] font-medium text-ink">{label}</span>
+                <span className="block truncate font-mono text-[12.5px] text-ink-3">{value}</span>
             </span>
-            <ArrowUpRight
-                className="h-4 w-4 text-ink-3 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
-                aria-hidden="true"
-            />
+            {external ? (
+                <ArrowUpRight aria-hidden="true" className={`${nudgeOut} text-ink-3 group-hover:text-accent`} />
+            ) : (
+                <ArrowRight aria-hidden="true" className={`${nudgeRight} text-ink-3 group-hover:text-accent`} />
+            )}
         </>
     );
 
@@ -49,60 +48,76 @@ const ChannelRow = ({
     );
 };
 
+// The ending mirrors the opening: the same drawing grid and large type, with the
+// address itself as the headline act.
 const ContactSection = ({ hasResume }: { hasResume: boolean }) => {
     const { email, github, linkedin } = siteConfig.links;
 
     return (
-        <Section
-            id="contact"
-            index="05"
-            eyebrow="Contact"
-            title="Get in touch."
-            description="If you'd like to talk about one of these projects, or an opportunity where this kind of work is useful, email is the best way to reach me."
-        >
-            <Rails className="border-t border-line">
-                <div className="grid grid-cols-1 md:grid-cols-12">
-                    <Reveal className="px-5 py-8 sm:px-10 sm:py-10 md:col-span-6 md:border-r md:border-line">
-                        <h3 className="mb-3 font-mono text-[11px] font-normal uppercase tracking-[0.12em] text-ink-3">
-                            Email
-                        </h3>
-                        <CopyEmailButton email={email} />
-                        <a
-                            href={`mailto:${email}`}
-                            className="mt-4 inline-flex items-center gap-2 text-sm text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-accent"
+        <section id="contact" aria-labelledby="contact-title" tabIndex={-1} className="outline-none">
+            <Rails className="relative overflow-hidden">
+                <div className="blueprint fade-right pointer-events-none absolute inset-0" aria-hidden="true" />
+                <Reveal className={`relative grid gap-y-6 pb-16 pt-20 lg:grid-cols-12 lg:gap-x-8 lg:pb-20 lg:pt-28 ${gutter}`}>
+                    <div className="lg:col-span-3 lg:pt-[1.1rem]">
+                        <SectionLabel index="05">Contact</SectionLabel>
+                    </div>
+                    <div className="lg:col-span-9">
+                        <h2
+                            id="contact-title"
+                            className="text-[clamp(2.4rem,1.4rem+4.2vw,5rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-ink"
                         >
-                            <Mail className="h-4 w-4" aria-hidden="true" />
-                            Or open your mail app
-                        </a>
-                    </Reveal>
+                            Get in touch.
+                        </h2>
+                        <p className="mt-6 max-w-[52ch] text-[17px] leading-relaxed text-ink-2 sm:text-lg">
+                            If you&apos;d like to talk about one of these projects, or an opportunity where this kind of work is
+                            useful, email is the best way to reach me.
+                        </p>
 
-                    <Reveal delay={0.08} className="border-t border-line md:col-span-6 md:border-t-0">
-                        <div className="divide-y divide-line">
-                            <ChannelRow
+                        <div className="mt-12 flex flex-col items-start gap-5 lg:mt-16">
+                            <a
+                                href={`mailto:${email}`}
+                                className="draw-underline max-w-full pb-1 text-[clamp(1.45rem,0.75rem+3.6vw,3.6rem)] font-medium leading-tight tracking-[-0.035em] text-ink hover:text-accent"
+                            >
+                                {email}
+                                <span className="sr-only"> (opens your email app)</span>
+                            </a>
+                            <CopyEmailButton email={email} />
+                        </div>
+                    </div>
+                </Reveal>
+
+                <ul className="relative grid border-t border-line bg-canvas/70 backdrop-blur-[2px] sm:grid-cols-3 sm:divide-x sm:divide-line">
+                    {linkedin && (
+                        <li className="border-b border-line sm:border-b-0">
+                            <Channel
                                 href={linkedin}
                                 external
-                                icon={<FaLinkedin className="h-4 w-4" aria-hidden="true" />}
+                                icon={<FaLinkedin className="h-[18px] w-[18px]" aria-hidden="true" />}
                                 label="LinkedIn"
                                 value={linkedin.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "")}
                             />
-                            <ChannelRow
-                                href={github}
-                                external
-                                icon={<FaGithub className="h-4 w-4" aria-hidden="true" />}
-                                label="GitHub"
-                                value={github.replace("https://", "")}
-                            />
-                            <ChannelRow
-                                href="/resume"
-                                icon={<FileText className="h-4 w-4" aria-hidden="true" />}
-                                label="Résumé"
-                                value={hasResume ? "View or download the PDF" : "Résumé page"}
-                            />
-                        </div>
-                    </Reveal>
-                </div>
+                        </li>
+                    )}
+                    <li className="border-b border-line sm:border-b-0">
+                        <Channel
+                            href={github}
+                            external
+                            icon={<FaGithub className="h-[18px] w-[18px]" aria-hidden="true" />}
+                            label="GitHub"
+                            value={github.replace("https://", "")}
+                        />
+                    </li>
+                    <li>
+                        <Channel
+                            href="/resume"
+                            icon={<FileText className="h-[18px] w-[18px]" aria-hidden="true" />}
+                            label="Résumé"
+                            value={hasResume ? "View or download the PDF" : "Résumé page"}
+                        />
+                    </li>
+                </ul>
             </Rails>
-        </Section>
+        </section>
     );
 };
 

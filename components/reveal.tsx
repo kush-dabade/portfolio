@@ -1,26 +1,31 @@
-'use client'
-import { motion } from "framer-motion";
+import type { CSSProperties } from "react";
 
-// Fades content up once as it enters the viewport. MotionConfig in the theme
-// provider drops the movement (keeping only the fade) for reduced-motion users.
+// Fades content up once as it enters the viewport. This is only a marker — the
+// motion is CSS (app/globals.css) and the one observer for the whole page lives
+// in reveal-observer.tsx — so it renders on the server and never hides anything
+// until JavaScript is running. `frame` is the variant for project imagery.
 const Reveal = ({
     children,
     className = "",
     delay = 0,
+    variant,
+    as: Tag = "div",
+    ...rest
 }: {
     children: React.ReactNode;
     className?: string;
     delay?: number;
-}) => (
-    <motion.div
+    variant?: "frame";
+    as?: "div" | "li" | "figure" | "header";
+} & Omit<React.HTMLAttributes<HTMLElement>, "className" | "children">) => (
+    <Tag
+        {...rest}
         className={className}
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-        transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+        data-reveal={variant ?? ""}
+        style={delay ? ({ "--reveal-delay": `${delay}s` } as CSSProperties) : undefined}
     >
         {children}
-    </motion.div>
+    </Tag>
 );
 
 export default Reveal;

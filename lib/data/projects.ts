@@ -1,45 +1,93 @@
 // Project content is checked against each repository's source code. Keep it that way:
 // no metrics, deployments or features the code can't back up.
 
-export type ProjectPreview = "teamos" | "university" | "coinwave";
+export type ProjectSlug = "teamos" | "university-management" | "coinwave";
 
 export interface ProjectLink {
     label: string;
+    // A few words on what the link leads to, shown under the label.
+    detail?: string;
     href: string;
 }
 
-export interface Project {
-    slug: string;
+// One engineering point: a short title and the evidence behind it.
+export interface ProjectNote {
     title: string;
+    body: string;
+}
+
+export interface Project {
+    slug: ProjectSlug;
+    name: string;
+    tagline: string;
     category: string;
-    status: string;
+    status: { label: string; tone: "accent" | "ok" | "muted" };
     summary: string;
-    highlights: string[];
+    notes: ProjectNote[];
     stack: string[];
     // Source repositories — some projects are split into frontend and backend.
     repos: ProjectLink[];
     // Only set when there is a working public deployment.
     liveLink?: string;
-    // Honest caveat shown under the highlights, for partially finished work.
+    // Honest caveat for partially finished work.
     note?: string;
-    featured?: boolean;
-    preview: ProjectPreview;
 }
+
+// What happens when a TeamOS member creates a task, in the order the backend
+// runs it (task.routes.ts → task.controller.ts → task.service.ts).
+export const teamosWritePath: ProjectNote[] = [
+    {
+        title: "Session",
+        body: "requireAuth resolves the Better Auth session from the request cookie.",
+    },
+    {
+        title: "Validate",
+        body: "The controller parses the body with a Zod schema before any service code runs.",
+    },
+    {
+        title: "Authorise",
+        body: "The service re-reads the caller's workspace membership and role from Postgres; guests can't write.",
+    },
+    {
+        title: "Commit",
+        body: "The task and its activity entry are written in one Prisma transaction.",
+    },
+    {
+        title: "Fan out",
+        body: "Only after the commit: a Socket.IO event to the workspace room, and a BullMQ job for the assignee's notification.",
+    },
+    {
+        title: "Refetch",
+        body: "Clients invalidate the affected TanStack Query caches and refetch, rather than patching local state.",
+    },
+];
 
 export const projects: Project[] = [
     {
         slug: "teamos",
-        title: "TeamOS — Multi-Tenant Project Management SaaS",
+        name: "TeamOS",
+        tagline: "Multi-tenant project management SaaS",
         category: "Flagship · Full-stack SaaS",
-        status: "In active development",
+        status: { label: "In active development", tone: "accent" },
         summary:
-            "A project management app where every team gets its own workspace: projects, sprints, tasks, comments, attachments and an activity trail. The backend is a modular monolith in TypeScript; the React frontend stays in sync through realtime events.",
-        highlights: [
-            "Workspace-scoped tenancy: every tenant-owned table carries a workspaceId, and each request re-reads the caller's membership and role (owner, admin, member, guest) from the database.",
-            "Layered domain modules (routes → controller → service → schema) with Zod validation at the boundary and Better Auth sessions.",
-            "Socket.IO events fire only after the Prisma transaction commits; the client invalidates TanStack Query caches and refetches instead of patching state.",
-            "Email and notification work runs on Redis-backed BullMQ queues with deterministic job IDs, so a retry can't send twice.",
-            "Docker Compose for the full stack; the backend suite runs against real Postgres and Redis in GitHub Actions on every pull request.",
+            "Teams sharing one app need their work kept strictly apart. TeamOS gives every team its own workspace — projects, sprints, tasks, comments, attachments and an activity trail — on a modular TypeScript backend, with a React frontend kept in sync through realtime events.",
+        notes: [
+            {
+                title: "Tenant isolation",
+                body: "Every tenant-owned table carries a workspaceId, and each request re-checks the caller's membership and role (owner, admin, member, guest).",
+            },
+            {
+                title: "No duplicate jobs",
+                body: "Notification and invitation-email jobs on Redis-backed BullMQ queues get deterministic IDs, so queueing the same event twice is a no-op.",
+            },
+            {
+                title: "One active sprint, enforced by Postgres",
+                body: "A hand-written partial unique index allows at most one active sprint per project, whatever the application code does.",
+            },
+            {
+                title: "Tested against real services",
+                body: "Tenant-isolation, RBAC and realtime tests run against real Postgres and Redis in GitHub Actions on every pull request.",
+            },
         ],
         stack: [
             "React",
@@ -53,47 +101,78 @@ export const projects: Project[] = [
             "BullMQ",
             "Socket.IO",
             "Better Auth",
-            "Docker",
+            "Zod",
+            "Docker Compose",
         ],
-        repos: [{ label: "View source", href: "https://github.com/kush-dabade/TeamOS" }],
-        featured: true,
-        preview: "teamos",
+        repos: [{ label: "Source", detail: "github.com/kush-dabade/TeamOS", href: "https://github.com/kush-dabade/TeamOS" }],
     },
     {
         slug: "university-management",
-        title: "University Management System",
+        name: "University Management System",
+        tagline: "Full-stack university administration",
         category: "Full-stack web app",
-        status: "Frontend + API",
+        status: { label: "Not deployed", tone: "muted" },
         summary:
             "An admin app for a university's academic structure — departments, subjects, classes, faculty and student enrollments — with a React frontend talking to a separate Express and PostgreSQL API.",
-        highlights: [
-            "Relational schema in Drizzle ORM on PostgreSQL: departments own subjects, subjects own classes, and teachers and enrolled students link back to users through indexed foreign keys.",
-            "List endpoints support search, filtering and pagination with joined queries; the frontend's Refine data provider maps table filters and page state onto those query parameters.",
-            "Better Auth email/password sessions with admin, teacher and student roles, plus Arcjet bot protection and per-role rate limits on the API.",
+        notes: [
+            {
+                title: "Relational model",
+                body: "Drizzle ORM on PostgreSQL: departments own subjects, subjects own classes, and teachers and enrolled students link back to users through indexed foreign keys.",
+            },
+            {
+                title: "Queries the UI can drive",
+                body: "List endpoints take search, filter and pagination parameters over joined queries; the Refine data provider maps table state onto them.",
+            },
+            {
+                title: "Roles and protection",
+                body: "Better Auth email/password sessions with admin, teacher and student roles, plus Arcjet bot protection and per-role rate limits.",
+            },
         ],
         stack: ["React", "TypeScript", "Refine", "shadcn/ui", "Zod", "Express", "Drizzle ORM", "PostgreSQL", "Better Auth", "Arcjet"],
         repos: [
-            { label: "Frontend", href: "https://github.com/kush-dabade/university-management-frontend" },
-            { label: "Backend", href: "https://github.com/kush-dabade/university-management-backend" },
+            {
+                label: "Frontend",
+                detail: "React · Refine · shadcn/ui",
+                href: "https://github.com/kush-dabade/university-management-frontend",
+            },
+            {
+                label: "Backend",
+                detail: "Express · Drizzle ORM · PostgreSQL",
+                href: "https://github.com/kush-dabade/university-management-backend",
+            },
         ],
         note: "Department, enrollment and statistics endpoints are written but not yet mounted in the API server.",
-        preview: "university",
     },
     {
         slug: "coinwave",
-        title: "CoinWave — Cryptocurrency Market Dashboard",
+        name: "CoinWave",
+        tagline: "Cryptocurrency market dashboard",
         category: "Frontend · Data visualisation",
-        status: "Live demo",
+        status: { label: "Live demo", tone: "ok" },
         summary:
             "A market dashboard built on CoinGecko's public API: market overview, a filterable coin table with 7-day sparklines, trending coins, analysis charts and a portfolio tracker. It runs entirely in the browser — there's no backend.",
-        highlights: [
-            "A typed service layer normalises CoinGecko responses (null-safe numbers, sparkline series) before any component renders them.",
-            "Market table with search, gainers/losers/trending filters, sorting by market cap, price or 24h change, and a watchlist saved in localStorage.",
-            "Recharts area charts, sparklines and allocation charts, plus a market heatmap, with data refreshed every 30–60 seconds.",
+        notes: [
+            {
+                title: "Typed data layer",
+                body: "A service layer normalises CoinGecko responses — null-safe numbers, sparkline series — before any component renders them.",
+            },
+            {
+                title: "Market table",
+                body: "Search, gainers / losers / trending filters, sorting by market cap, price or 24h change, and a watchlist saved in localStorage.",
+            },
+            {
+                title: "Charts",
+                body: "Recharts area charts, sparklines and allocation charts plus a market heatmap; each page polls the API every 15 to 60 seconds.",
+            },
         ],
         stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "Recharts", "TanStack Table", "React Router"],
-        repos: [{ label: "View source", href: "https://github.com/kush-dabade/coinwave" }],
+        repos: [{ label: "Source", detail: "github.com/kush-dabade/coinwave", href: "https://github.com/kush-dabade/coinwave" }],
         liveLink: "https://coinwave.vercel.app",
-        preview: "coinwave",
     },
 ];
+
+export const projectBySlug = (slug: ProjectSlug): Project => {
+    const project = projects.find((p) => p.slug === slug);
+    if (!project) throw new Error(`Unknown project: ${slug}`);
+    return project;
+};

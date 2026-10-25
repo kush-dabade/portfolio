@@ -1,39 +1,36 @@
 import { skillGroups } from "@/lib/data/skills";
-import Section, { Rails } from "../section";
+import Section, { Rails, gutter } from "../section";
 import Reveal from "../reveal";
+import InlineList from "../inline-list";
 
+// Four groups as a specification table: the group in the margin column, the
+// skills as plain text beside it. Deliberately quieter than the projects.
 const SkillsSection = () => (
     <Section
         id="skills"
-        index="02"
-        eyebrow="Skills"
+        index="03"
+        label="Skills"
         title="What I work with."
-        description="Drawn from my projects and coursework. No ratings — the projects below show how I've used them."
+        description="Drawn from my projects and coursework. No ratings — the projects above show how I've used them."
     >
         <Rails className="border-t border-line">
-            {/* Four groups in a 2 × 2 grid; the hairlines come from the gap over a line-coloured backdrop. */}
-            <ul className="grid gap-px bg-line md:grid-cols-2">
+            <dl className="divide-y divide-line">
                 {skillGroups.map((group, i) => (
-                    <li key={group.id} className="bg-canvas">
-                        <Reveal delay={i * 0.04} className="h-full px-5 py-6 sm:px-10 sm:py-8">
-                            <h3 className="mb-4 flex items-center gap-3 text-sm font-medium text-ink">
-                                <span className="font-mono text-xs font-normal text-ink-3">{group.id}</span>
-                                {group.name}
-                            </h3>
-                            <ul className="flex flex-wrap gap-1.5">
-                                {group.skills.map((skill) => (
-                                    <li
-                                        key={skill}
-                                        className="rounded-md border border-line bg-inset px-2 py-0.5 text-[13px] text-ink-2 transition-colors hover:border-line-strong hover:text-ink"
-                                    >
-                                        {skill}
-                                    </li>
-                                ))}
-                            </ul>
-                        </Reveal>
-                    </li>
+                    <Reveal
+                        key={group.id}
+                        delay={i * 0.05}
+                        className={`grid gap-2 py-6 lg:grid-cols-12 lg:items-baseline lg:gap-x-8 lg:py-7 ${gutter}`}
+                    >
+                        <dt className="flex items-baseline gap-3 text-[15px] font-medium text-ink lg:col-span-3">
+                            <span className="font-mono text-[12.5px] font-normal text-ink-3">{group.id}</span>
+                            {group.name}
+                        </dt>
+                        <dd className="lg:col-span-9">
+                            <InlineList items={group.skills} className="text-[16px] leading-relaxed text-ink-2 sm:text-[17px]" />
+                        </dd>
+                    </Reveal>
                 ))}
-            </ul>
+            </dl>
         </Rails>
     </Section>
 );

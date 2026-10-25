@@ -34,11 +34,11 @@ export default function Home() {
       />
       <Hero hasResume={resumeAvailable} />
       <SectionBreak />
+      <ProjectSection />
+      <SectionBreak />
       <AboutSection />
       <SectionBreak />
       <SkillsSection />
-      <SectionBreak />
-      <ProjectSection />
       <SectionBreak />
       <EducationSection />
       <SectionBreak />

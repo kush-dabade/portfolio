@@ -1,15 +1,17 @@
 # Kush Dabade — Portfolio
 
 Personal portfolio of **Kush Dabade**, B.Sc. Computer Science student at MIT World Peace University, Pune.
-A dark, minimal, static site built with Next.js, TypeScript and Tailwind CSS.
+An editorial, static site built with Next.js, TypeScript and Tailwind CSS.
 
 ## What's on it
 
-- **Home** (`/`) — hero, about, skills, four project showcases, education and contact.
+- **Home** (`/`) — hero, three project case studies (TeamOS, University Management System, CoinWave),
+  about, skills, education and contact.
 - **Résumé** (`/resume`) — download button plus an embedded PDF preview (pdf.js via `react-pdf`).
-- Light/dark theme toggle (dark by default, remembered per browser), animated section navigation with
-  scroll-spy, section reveals, project hover states, a copy-email button, mobile navigation,
-  reduced-motion support, SEO metadata, sitemap, robots.txt and a generated Open Graph image.
+- Light/dark theme toggle (dark by default, remembered per browser), section navigation with
+  scroll-spy and a reading-progress line, CSS-driven section reveals (nothing is hidden without
+  JavaScript), a TeamOS screen switcher, an SVG schema diagram, a copy-email button, mobile
+  navigation, reduced-motion support, SEO metadata, sitemap, robots.txt and a generated Open Graph image.
 
 Every page is prerendered as static HTML at build time. There is no backend and no database.
 
@@ -26,7 +28,7 @@ npm run dev        # http://localhost:3000
 |---|---|
 | `npm run dev` | Development server |
 | `npm run lint` | ESLint (Next.js core-web-vitals + TypeScript rules) |
-| `npx tsc --noEmit` | Type-check |
+| `npm run typecheck` | Type-check |
 | `npm run build` | Production build (static) |
 | `npm start` | Serve the production build |
 
@@ -38,9 +40,6 @@ All personal content lives in two files:
   Leave a link as `""` to hide it; the UI never renders a control for a missing value.
 - `lib/data/projects.ts` and `lib/data/skills.ts` — projects and skill groups.
 - `assets/originals/` — full-size source images (not served). Web-ready copies live in `public/images/`.
-
-While running `npm run dev`, the Contact section lists anything still missing (email, LinkedIn,
-résumé PDF). That notice is never included in a production build.
 
 ### Adding the résumé
 

@@ -10,9 +10,9 @@ import SectionLink from "../section-link";
 import { useActiveSection, usePanelDismiss } from "./hooks";
 
 const SECTIONS = [
+    { id: "projects", label: "Projects" },
     { id: "about", label: "About" },
     { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
     { id: "education", label: "Education" },
     { id: "contact", label: "Contact" },
 ] as const;
@@ -60,9 +60,10 @@ const SiteHeader = () => {
 
     return (
         <>
-            <header className="sticky top-0 z-50 border-b border-line bg-canvas/80 backdrop-blur-md">
-                <div className="mx-auto max-w-5xl px-4 sm:px-6">
-                    <div className="flex h-14 items-center justify-between gap-4 border-x border-line px-3 sm:px-4">
+            {/* Transparent over the top of the page, solid once it scrolls (CSS scroll timeline in globals.css). */}
+            <header className="site-header sticky top-0 z-50 border-b border-line bg-canvas/80 backdrop-blur-md">
+                <div className="mx-auto max-w-300 px-3 sm:px-6">
+                    <div className="flex h-14 items-center justify-between gap-4 border-x border-line pl-5 pr-5 sm:pl-8 sm:pr-8 md:pr-6 lg:pl-12 lg:pr-10">
                         <Link href="/" onClick={closeMenu} aria-label={`${siteConfig.name} — home`} className="group flex items-center gap-2.5 rounded-md">
                             <span className="grid h-7 w-7 place-items-center rounded-md border border-line-strong bg-raised font-mono text-[11px] font-semibold text-ink group-hover:border-accent-line">
                                 {siteConfig.initials}
@@ -126,6 +127,9 @@ const SiteHeader = () => {
                     </div>
                 </div>
 
+                {/* Reading progress along the bottom edge of the header. */}
+                <span aria-hidden="true" className="scroll-progress pointer-events-none absolute inset-x-0 -bottom-px hidden h-px bg-accent" />
+
                 <AnimatePresence>
                     {menuOpen && (
                         <motion.nav
@@ -138,26 +142,26 @@ const SiteHeader = () => {
                             transition={{ duration: 0.16 }}
                             className="absolute inset-x-0 top-full z-50 border-b border-line bg-canvas md:hidden"
                         >
-                            <div className="mx-auto max-w-5xl px-4 sm:px-6">
-                                <ol className="border-x border-line px-2 py-2">
+                            <div className="mx-auto max-w-300 px-3 sm:px-6">
+                                <ol className="border-x border-line px-2 py-3">
                                     {SECTIONS.map(({ id, label }, n) => (
                                         <li key={id}>
                                             <SectionLink
                                                 id={id}
                                                 onClick={closeMenu}
                                                 aria-current={current === id ? "location" : undefined}
-                                                className="flex items-center justify-between rounded-md px-3 py-3 text-[15px] font-medium text-ink-2 hover:bg-wash hover:text-ink aria-[current=location]:bg-raised aria-[current=location]:text-ink"
+                                                className="flex items-baseline gap-4 rounded-lg px-3 py-3 text-[1.375rem] font-semibold tracking-[-0.02em] text-ink-2 hover:bg-wash hover:text-ink aria-[current=location]:text-ink"
                                             >
+                                                <span className="w-5 font-mono text-[12px] font-normal tracking-normal text-ink-3">{String(n + 1).padStart(2, "0")}</span>
                                                 {label}
-                                                <span className="font-mono text-[11px] text-ink-3">{String(n + 1).padStart(2, "0")}</span>
                                             </SectionLink>
                                         </li>
                                     ))}
-                                    <li className="mt-2 border-t border-line pt-2">
+                                    <li className="mt-2 border-t border-line pt-3">
                                         <Link
                                             href="/resume"
                                             onClick={closeMenu}
-                                            className="flex items-center gap-2 rounded-md px-3 py-3 text-[15px] font-medium text-ink-2 hover:bg-wash hover:text-ink"
+                                            className="flex items-center gap-2 rounded-lg px-3 py-3 text-[15px] font-medium text-ink-2 hover:bg-wash hover:text-ink"
                                         >
                                             <FileText aria-hidden="true" className="h-4 w-4" />
                                             Résumé

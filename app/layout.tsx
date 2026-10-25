@@ -7,8 +7,10 @@ import { ScrollRoot } from "@/components/scroll";
 import SiteHeader from "@/components/header/site-header";
 import Footer from "@/components/footer";
 import BackToTop from "@/components/back-to-top";
+import RevealObserver from "@/components/reveal-observer";
 
-const sans = Inter({ subsets: ["latin"], variable: "--font-inter" });
+// The optical-size axis gives large headings Inter's tighter display design.
+const sans = Inter({ subsets: ["latin"], variable: "--font-inter", axes: ["opsz"] });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
 const { name, seo, links } = siteConfig;
@@ -34,8 +36,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#08090a" },
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+    { media: "(prefers-color-scheme: light)", color: "#fafaf9" },
   ],
 };
 
@@ -59,11 +61,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeRoot>
           <ScrollRoot>
             <SiteHeader />
-            <main id="main" tabIndex={-1} className="flex-1 outline-none">
+            <main id="main" tabIndex={-1} className="flex flex-1 flex-col outline-none">
               {children}
             </main>
             <Footer />
             <BackToTop />
+            <RevealObserver />
           </ScrollRoot>
         </ThemeRoot>
       </body>
