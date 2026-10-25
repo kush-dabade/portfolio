@@ -15,17 +15,23 @@ const EducationSection = () => {
                             <GraduationCap className="h-5 w-5" aria-hidden="true" />
                         </span>
                         <div>
-                            <h3 className="text-lg font-semibold tracking-tight text-ink">
-                                {education.degree}
-                            </h3>
+                            <h3 className="text-lg font-semibold tracking-tight text-ink">{education.degree}</h3>
                             <p className="mt-1 text-[15px] text-ink-2">
-                                {education.institution}
+                                Specialization in {education.specialization}
                             </p>
-                            <p className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-ink-3">
-                                <span>{education.location}</span>
-                                <span aria-hidden="true">·</span>
-                                <span>{education.period}</span>
+                            <p className="mt-0.5 text-[15px] text-ink-2">
+                                {education.institution}, {education.location}
                             </p>
+                            <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs">
+                                <div className="flex gap-2">
+                                    <dt className="text-ink-3">Graduating</dt>
+                                    <dd className="text-ink">{education.expectedGraduation} (expected)</dd>
+                                </div>
+                                <div className="flex gap-2">
+                                    <dt className="text-ink-3">CGPA</dt>
+                                    <dd className="text-ink">{education.cgpa}</dd>
+                                </div>
+                            </dl>
                         </div>
                     </div>
                     <div className="border-t border-line px-5 py-8 sm:px-10 sm:py-10 md:col-span-5 md:border-t-0 md:px-8">

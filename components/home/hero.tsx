@@ -1,5 +1,5 @@
 import { ArrowDown } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { siteConfig } from "@/lib/config/site-config";
 import { Rails } from "../section";
 import Reveal from "../reveal";
@@ -14,8 +14,21 @@ const Crosshair = ({ className }: { className: string }) => (
     </span>
 );
 
+const SocialIcon = ({ href, label, children }: { href: string; label: string; children: React.ReactNode }) => (
+    <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`${label} (opens in a new tab)`}
+        title={label}
+        className="grid h-10 w-10 place-items-center rounded-md border border-transparent text-ink-2 hover:border-line hover:text-ink"
+    >
+        {children}
+    </a>
+);
+
 const Hero = ({ hasResume }: { hasResume: boolean }) => {
-    const githubHandle = siteConfig.links.github.split("/").pop();
+    const { name, role, location, hero, links } = siteConfig;
 
     return (
         <section aria-labelledby="hero-title">
@@ -32,29 +45,28 @@ const Hero = ({ hasResume }: { hasResume: boolean }) => {
                     18.52° N · 73.86° E — Pune
                 </span>
 
-                <div className="relative px-5 pb-16 pt-16 sm:px-10 sm:pb-24 sm:pt-28">
+                <div className="relative px-5 pb-16 pt-14 sm:px-10 sm:pb-24 sm:pt-24">
                     <Reveal>
-                        <p className="inline-flex items-center gap-2 rounded-full border border-line bg-canvas/70 px-3 py-1 font-mono text-[11px] text-ink-2 backdrop-blur-sm">
-                            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-                            {siteConfig.education.degree} · MIT-WPU, Pune
+                        <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                            <span className="text-base font-medium text-ink sm:text-lg">{name}</span>
+                            <span className="font-mono text-[12px] text-ink-3 sm:text-[13px]">
+                                {role} · {location}
+                            </span>
                         </p>
                     </Reveal>
 
                     <Reveal delay={0.06}>
                         <h1
                             id="hero-title"
-                            className="mt-6 text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.035em] text-ink sm:text-6xl lg:text-7xl"
+                            className="mt-5 max-w-[17ch] text-[2.25rem] font-semibold leading-[1.06] tracking-[-0.03em] text-ink sm:text-5xl lg:text-6xl"
                         >
-                            {siteConfig.name}
+                            {hero.headline}
                         </h1>
-                        <p className="mt-3 font-mono text-[13px] text-ink-3 sm:text-sm">
-                            {siteConfig.role}
-                        </p>
                     </Reveal>
 
                     <Reveal delay={0.12}>
-                        <p className="mt-7 max-w-xl text-base leading-relaxed text-ink-2 sm:text-lg">
-                            {siteConfig.intro}
+                        <p className="mt-6 max-w-[60ch] text-base leading-relaxed text-ink-2 sm:text-[17px]">
+                            {hero.intro}
                         </p>
                     </Reveal>
 
@@ -71,16 +83,17 @@ const Hero = ({ hasResume }: { hasResume: boolean }) => {
                                 available={hasResume}
                                 className="inline-flex items-center gap-2 rounded-md border border-line-strong bg-canvas/60 px-4 py-2.5 text-sm font-medium text-ink backdrop-blur-sm hover:bg-raised"
                             />
-                            <a
-                                href={siteConfig.links.github}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex items-center gap-2 rounded-md px-3 py-2.5 font-mono text-[13px] text-ink-2 hover:text-ink"
-                            >
-                                <FaGithub className="h-4 w-4" aria-hidden="true" />
-                                {githubHandle}
-                                <span className="sr-only">on GitHub (opens in a new tab)</span>
-                            </a>
+                            <span className="mx-1 hidden h-5 w-px bg-line sm:block" aria-hidden="true" />
+                            <div className="flex items-center">
+                                <SocialIcon href={links.github} label="GitHub">
+                                    <FaGithub className="h-[18px] w-[18px]" aria-hidden="true" />
+                                </SocialIcon>
+                                {links.linkedin && (
+                                    <SocialIcon href={links.linkedin} label="LinkedIn">
+                                        <FaLinkedin className="h-[18px] w-[18px]" aria-hidden="true" />
+                                    </SocialIcon>
+                                )}
+                            </div>
                         </div>
                     </Reveal>
                 </div>

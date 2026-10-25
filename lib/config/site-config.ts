@@ -11,67 +11,72 @@ const siteUrl =
 export const siteConfig = {
     name: "Kush Dabade",
     initials: "KD",
-    role: "Full-stack & cloud · Pune, India",
+    role: "Full-stack developer",
     location: "Pune, India",
-    intro:
-        "I'm a Computer Science student building full-stack web applications and learning to run them reliably on AWS. I care about systems that are secure by default, tested against real dependencies, and honest about their trade-offs.",
+
+    hero: {
+        headline: "Building full-stack products, from idea to implementation.",
+        intro:
+            "I build web applications with React, TypeScript, Node.js and PostgreSQL, with a growing focus on backend architecture and cloud infrastructure. I like turning ideas into working products — and understanding the engineering decisions behind them.",
+    },
 
     about: [
-        "I'm studying for a B.Sc. in Computer Science at MIT World Peace University in Pune. I like taking a feature all the way through — from the database schema and API to the interface, and then to how it should run in production.",
-        "My largest project is TeamOS, a multi-tenant project-management workspace with realtime updates, background job queues and a backend test suite that runs against real Postgres and Redis in CI. Alongside it, my cloud coursework has me provisioning infrastructure as code and deliberately breaking EC2 instances to watch a load balancer and Auto Scaling Group recover.",
-        "I write down why a decision was made, not only what it was, and I prefer a smaller claim I can prove over a bigger one I can't.",
+        "I'm a Computer Science student at MIT World Peace University, Pune, interested in building useful software and understanding how it works beneath the interface. I enjoy working across the stack — especially designing APIs, modelling relational data, and connecting backend systems to clean, usable frontends.",
+        "TeamOS has been my chance to explore that on a larger application: multi-tenant architecture, background jobs and realtime features. I'm continuing to grow in backend engineering, system design and cloud infrastructure by building and improving real projects.",
     ],
 
-    focus: [
-        { label: "Studying", value: "B.Sc. Computer Science, MIT-WPU" },
-        { label: "Building", value: "TeamOS — multi-tenant workspace" },
-        { label: "Practising", value: "AWS, IaC and failure recovery" },
-        { label: "Based in", value: "Pune, India" },
-    ],
+    // Profile image for the About section: a web-sized copy of assets/originals/kush-avatar-16bit.jpeg.
+    // It is a pixel-art portrait Kush supplied;
+    // swap `src` for a photograph (any aspect, it's cropped square) whenever you like.
+    portrait: {
+        src: "/images/kush-avatar.webp",
+        alt: "Pixel-art portrait of Kush Dabade wearing headphones and sunglasses",
+        pixelArt: true,
+    },
 
     education: {
-        degree: "B.Sc. Computer Science",
+        degree: "B.Sc. (Honors) Computer Science",
+        specialization: "Cloud Computing",
         institution: "MIT World Peace University",
         location: "Pune, India",
-        // Taken from your web-development résumé; update if it changes.
-        period: "Expected 2027",
+        expectedGraduation: "2027",
+        cgpa: "8.37",
         coursework: [
             "Data Structures & Algorithms",
-            "Database Systems",
+            "Database Management Systems",
             "Web Technologies",
-            "Cloud & DevOps practicals",
+            "Computer Networks",
+            "Operating Systems",
         ],
     },
 
     seo: {
-        title: "Kush Dabade — Full-stack & Cloud Developer",
+        title: "Kush Dabade — Full-stack Developer",
         description:
-            "Portfolio of Kush Dabade, a Computer Science student at MIT World Peace University, Pune, building full-stack TypeScript applications and AWS infrastructure.",
+            "Kush Dabade is a Computer Science student at MIT World Peace University, Pune, building full-stack applications with React, TypeScript, Node.js and PostgreSQL, with a focus on backend architecture and cloud infrastructure.",
         url: siteUrl,
         keywords: [
             "Kush Dabade",
-            "Portfolio",
             "Full-stack developer",
+            "Backend engineering",
             "TypeScript",
             "React",
             "Node.js",
             "PostgreSQL",
-            "AWS",
-            "CloudFormation",
+            "TeamOS",
             "MIT World Peace University",
+            "Portfolio",
         ],
     },
 
     links: {
         github: "https://github.com/kush-dabade",
-        // TODO(Kush): add your public LinkedIn URL, e.g. "https://www.linkedin.com/in/your-handle".
-        linkedin: "",
-        // TODO(Kush): add the email address you want recruiters to use.
-        email: "",
+        linkedin: "https://www.linkedin.com/in/kush-dabade/",
+        email: "dabadekush@gmail.com",
     },
 
-    // Drop your PDF into /public with this exact name. The download buttons and
-    // the embedded preview switch on automatically when the file exists at build time.
+    // The download buttons and embedded preview switch on automatically when
+    // this file exists in /public at build time.
     resume: {
         file: "/Kush_Dabade_Resume.pdf",
         downloadName: "Kush_Dabade_Resume.pdf",

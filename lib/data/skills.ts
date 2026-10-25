@@ -1,4 +1,4 @@
-// Grouped from the tools actually used in the projects on this site.
+// Limited to what the résumé and the projects on this site can back up.
 
 export interface SkillGroup {
     id: string;
@@ -10,31 +10,33 @@ export const skillGroups: SkillGroup[] = [
     {
         id: "01",
         name: "Languages",
-        skills: ["TypeScript", "JavaScript", "Python", "SQL", "Bash", "HTML & CSS"],
+        skills: ["JavaScript", "TypeScript", "Python", "SQL", "C/C++"],
     },
     {
         id: "02",
         name: "Frontend",
-        skills: ["React", "Vite", "Tailwind CSS", "TanStack Query", "React Router", "shadcn/ui"],
+        skills: ["React", "TanStack Query", "Tailwind CSS", "HTML", "CSS"],
     },
     {
         id: "03",
-        name: "Backend",
-        skills: ["Node.js", "Express", "Prisma", "Zod", "Better Auth", "Socket.IO", "BullMQ", "REST APIs"],
+        name: "Backend & Data",
+        skills: [
+            "Node.js",
+            "Express",
+            "REST APIs",
+            "PostgreSQL",
+            "Prisma",
+            "Drizzle ORM",
+            "MongoDB",
+            "Redis / BullMQ",
+            "Socket.IO",
+            "Zod",
+            "Auth & access control",
+        ],
     },
     {
         id: "04",
-        name: "Data",
-        skills: ["PostgreSQL", "Redis"],
-    },
-    {
-        id: "05",
-        name: "Cloud & DevOps",
-        skills: ["AWS EC2", "ALB & Auto Scaling", "S3", "IAM", "CloudFormation", "AWS CLI", "Docker", "GitHub Actions"],
-    },
-    {
-        id: "06",
-        name: "Testing & Tools",
-        skills: ["Vitest", "Supertest", "Python unittest", "Git", "GitHub"],
+        name: "Cloud & Engineering",
+        skills: ["AWS", "Docker", "Docker Compose", "Git", "GitHub", "CI/CD fundamentals"],
     },
 ];

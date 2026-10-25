@@ -37,6 +37,7 @@ All personal content lives in two files:
 - `lib/config/site-config.ts` — name, intro, about, education, links, résumé path.
   Leave a link as `""` to hide it; the UI never renders a control for a missing value.
 - `lib/data/projects.ts` and `lib/data/skills.ts` — projects and skill groups.
+- `assets/originals/` — full-size source images (not served). Web-ready copies live in `public/images/`.
 
 While running `npm run dev`, the Contact section lists anything still missing (email, LinkedIn,
 résumé PDF). That notice is never included in a production build.

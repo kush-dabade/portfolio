@@ -52,63 +52,39 @@ const ChannelRow = ({
 const ContactSection = ({ hasResume }: { hasResume: boolean }) => {
     const { email, github, linkedin } = siteConfig.links;
 
-    // Shown only in `next dev`, so the deployed site never carries placeholders.
-    const missing = [
-        !email && "contact email (lib/config/site-config.ts → links.email)",
-        !linkedin && "LinkedIn URL (lib/config/site-config.ts → links.linkedin)",
-        !hasResume && `résumé PDF (public${siteConfig.resume.file})`,
-    ].filter(Boolean);
-
     return (
         <Section
             id="contact"
             index="05"
             eyebrow="Contact"
-            title="Let's talk."
-            description="Questions about a project, or anything else on this page — I'd be glad to hear from you. GitHub is the quickest way to see what I'm working on."
+            title="Get in touch."
+            description="If you'd like to talk about one of these projects, or an opportunity where this kind of work is useful, email is the best way to reach me."
         >
             <Rails className="border-t border-line">
                 <div className="grid grid-cols-1 md:grid-cols-12">
                     <Reveal className="px-5 py-8 sm:px-10 sm:py-10 md:col-span-6 md:border-r md:border-line">
-                        {email ? (
-                            <>
-                                <h3 className="mb-3 font-mono text-[11px] font-normal uppercase tracking-[0.12em] text-ink-3">
-                                    Email
-                                </h3>
-                                <CopyEmailButton email={email} />
-                                <a
-                                    href={`mailto:${email}`}
-                                    className="mt-4 inline-flex items-center gap-2 text-sm text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-accent"
-                                >
-                                    <Mail className="h-4 w-4" aria-hidden="true" />
-                                    Or open your mail app
-                                </a>
-                            </>
-                        ) : (
-                            <>
-                                <h3 className="mb-3 font-mono text-[11px] font-normal uppercase tracking-[0.12em] text-ink-3">
-                                    Best way to reach me
-                                </h3>
-                                <p className="text-[15px] leading-relaxed text-ink-2">
-                                    Find me on GitHub, where every project on this page lives with its full write-up.
-                                </p>
-                            </>
-                        )}
-
-                        {process.env.NODE_ENV === "development" && missing.length > 0 && (
-                            <div className="mt-8 rounded-md border border-dashed border-warn/40 bg-warn/5 p-4 font-mono text-xs text-ink-2">
-                                <p className="mb-2 text-warn">Dev only — still to supply:</p>
-                                <ul className="list-inside list-disc space-y-1">
-                                    {missing.map((item) => (
-                                        <li key={item as string}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
+                        <h3 className="mb-3 font-mono text-[11px] font-normal uppercase tracking-[0.12em] text-ink-3">
+                            Email
+                        </h3>
+                        <CopyEmailButton email={email} />
+                        <a
+                            href={`mailto:${email}`}
+                            className="mt-4 inline-flex items-center gap-2 text-sm text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink hover:decoration-accent"
+                        >
+                            <Mail className="h-4 w-4" aria-hidden="true" />
+                            Or open your mail app
+                        </a>
                     </Reveal>
 
                     <Reveal delay={0.08} className="border-t border-line md:col-span-6 md:border-t-0">
                         <div className="divide-y divide-line">
+                            <ChannelRow
+                                href={linkedin}
+                                external
+                                icon={<FaLinkedin className="h-4 w-4" aria-hidden="true" />}
+                                label="LinkedIn"
+                                value={linkedin.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                            />
                             <ChannelRow
                                 href={github}
                                 external
@@ -116,15 +92,6 @@ const ContactSection = ({ hasResume }: { hasResume: boolean }) => {
                                 label="GitHub"
                                 value={github.replace("https://", "")}
                             />
-                            {linkedin && (
-                                <ChannelRow
-                                    href={linkedin}
-                                    external
-                                    icon={<FaLinkedin className="h-4 w-4" aria-hidden="true" />}
-                                    label="LinkedIn"
-                                    value={linkedin.replace(/^https:\/\/(www\.)?/, "")}
-                                />
-                            )}
                             <ChannelRow
                                 href="/resume"
                                 icon={<FileText className="h-4 w-4" aria-hidden="true" />}

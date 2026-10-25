@@ -51,7 +51,7 @@ export default function OpengraphImage() {
             {siteConfig.name}
           </div>
           <div style={{ display: "flex", marginTop: 24, fontSize: 32, color: "#a3a6ae" }}>
-            Full-stack web applications &amp; AWS infrastructure
+            {siteConfig.hero.headline}
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 22, color: "#6ea8fe" }}>

@@ -22,6 +22,7 @@ export default function Home() {
       "@type": "CollegeOrUniversity",
       name: siteConfig.education.institution,
     },
+    email: `mailto:${siteConfig.links.email}`,
     sameAs: [siteConfig.links.github, siteConfig.links.linkedin].filter(Boolean),
   };
 

@@ -1,7 +1,12 @@
-// Project content is taken from each repository's README. Keep it that way:
-// no metrics, deployments or links that the repository can't back up.
+// Project content is checked against each repository's source code. Keep it that way:
+// no metrics, deployments or features the code can't back up.
 
-export type ProjectPreview = "teamos" | "iac" | "failover" | "ratings";
+export type ProjectPreview = "teamos" | "university" | "coinwave";
+
+export interface ProjectLink {
+    label: string;
+    href: string;
+}
 
 export interface Project {
     slug: string;
@@ -11,26 +16,30 @@ export interface Project {
     summary: string;
     highlights: string[];
     stack: string[];
-    githubLink: string;
-    // Only set when there is a real, public deployment.
+    // Source repositories — some projects are split into frontend and backend.
+    repos: ProjectLink[];
+    // Only set when there is a working public deployment.
     liveLink?: string;
+    // Honest caveat shown under the highlights, for partially finished work.
+    note?: string;
+    featured?: boolean;
     preview: ProjectPreview;
 }
 
 export const projects: Project[] = [
     {
         slug: "teamos",
-        title: "TeamOS",
-        category: "Full-stack SaaS",
+        title: "TeamOS — Multi-Tenant Project Management SaaS",
+        category: "Flagship · Full-stack SaaS",
         status: "In active development",
         summary:
-            "A multi-tenant project-management workspace. Every team gets a workspace, and every project, sprint, task and conversation lives inside it — built as a modular monolith with realtime updates.",
+            "A project management app where every team gets its own workspace: projects, sprints, tasks, comments, attachments and an activity trail. The backend is a modular monolith in TypeScript; the React frontend stays in sync through realtime events.",
         highlights: [
-            "Tenancy is checked, never trusted: each tenant-owned table carries a workspaceId, and membership and role are re-read from the database on every request.",
-            "Realtime events are emitted only after the Prisma transaction commits; clients invalidate and refetch instead of patching state.",
-            "Email and notification fan-out runs on Redis-backed BullMQ queues with deterministic job IDs, so a retry can't send twice.",
-            "“One active sprint per project” is a partial unique index in Postgres, not a service-level check.",
-            "The backend suite runs against real Postgres and Redis in GitHub Actions on every pull request.",
+            "Workspace-scoped tenancy: every tenant-owned table carries a workspaceId, and each request re-reads the caller's membership and role (owner, admin, member, guest) from the database.",
+            "Layered domain modules (routes → controller → service → schema) with Zod validation at the boundary and Better Auth sessions.",
+            "Socket.IO events fire only after the Prisma transaction commits; the client invalidates TanStack Query caches and refetches instead of patching state.",
+            "Email and notification work runs on Redis-backed BullMQ queues with deterministic job IDs, so a retry can't send twice.",
+            "Docker Compose for the full stack; the backend suite runs against real Postgres and Redis in GitHub Actions on every pull request.",
         ],
         stack: [
             "React",
@@ -43,60 +52,48 @@ export const projects: Project[] = [
             "Redis",
             "BullMQ",
             "Socket.IO",
+            "Better Auth",
             "Docker",
         ],
-        githubLink: "https://github.com/kush-dabade/TeamOS",
+        repos: [{ label: "View source", href: "https://github.com/kush-dabade/TeamOS" }],
+        featured: true,
         preview: "teamos",
     },
     {
-        slug: "aws-infrastructure-automation",
-        title: "AWS Infrastructure Automation",
-        category: "Infrastructure as Code",
-        status: "Course practical",
+        slug: "university-management",
+        title: "University Management System",
+        category: "Full-stack web app",
+        status: "Frontend + API",
         summary:
-            "A repeatable Infrastructure as Code workflow: a parameterised AWS CloudFormation template for a secure S3 bucket, provisioned, updated and drift-checked through the AWS CLI.",
+            "An admin app for a university's academic structure — departments, subjects, classes, faculty and student enrollments — with a React frontend talking to a separate Express and PostgreSQL API.",
         highlights: [
-            "Parameterised template (ProjectName, Environment, Owner); account ID and region are derived, never hard-coded.",
-            "Secure defaults: SSE-S3 encryption, all four Block Public Access settings, ACLs disabled and an HTTPS-only bucket policy.",
-            "Create and update both go through reviewed change sets; the deploy script needs a typed confirmation and refuses to touch an existing stack.",
-            "Recorded in ap-south-1: CREATE_COMPLETE, a versioning update with no resource replacement, and drift detection IN_SYNC.",
+            "Relational schema in Drizzle ORM on PostgreSQL: departments own subjects, subjects own classes, and teachers and enrolled students link back to users through indexed foreign keys.",
+            "List endpoints support search, filtering and pagination with joined queries; the frontend's Refine data provider maps table filters and page state onto those query parameters.",
+            "Better Auth email/password sessions with admin, teacher and student roles, plus Arcjet bot protection and per-role rate limits on the API.",
         ],
-        stack: ["AWS CloudFormation", "AWS CLI v2", "Amazon S3", "Bash", "cfn-lint"],
-        githubLink: "https://github.com/kush-dabade/aws-infrastructure-automation",
-        preview: "iac",
+        stack: ["React", "TypeScript", "Refine", "shadcn/ui", "Zod", "Express", "Drizzle ORM", "PostgreSQL", "Better Auth", "Arcjet"],
+        repos: [
+            { label: "Frontend", href: "https://github.com/kush-dabade/university-management-frontend" },
+            { label: "Backend", href: "https://github.com/kush-dabade/university-management-backend" },
+        ],
+        note: "Department, enrollment and statistics endpoints are written but not yet mounted in the API server.",
+        preview: "university",
     },
     {
-        slug: "ec2-failure-recovery",
-        title: "EC2 Failure Recovery Experiment",
-        category: "High availability",
-        status: "Course experiment",
+        slug: "coinwave",
+        title: "CoinWave — Cryptocurrency Market Dashboard",
+        category: "Frontend · Data visualisation",
+        status: "Live demo",
         summary:
-            "An experiment showing that an application behind an Application Load Balancer keeps serving when an EC2 instance fails, while an Auto Scaling Group replaces it — with a dashboard that shows the real AWS state as it changes.",
+            "A market dashboard built on CoinGecko's public API: market overview, a filterable coin table with 7-day sparklines, trending coins, analysis charts and a portfolio tracker. It runs entirely in the browser — there's no backend.",
         highlights: [
-            "Two instances in two Availability Zones behind an ALB, managed by an Auto Scaling Group (min 2, max 3) with /health target checks.",
-            "The dashboard reads ASG, target-health and EC2 state through a read-only instance role; the public site is GET/HEAD only.",
-            "Failure injection runs only from the operator's terminal, with allowlist checks, typed confirmation and a guard that never terminates the last healthy target.",
-            "Downtime is reported as the longest run of failed requests at a 700 ms sampling interval — “none observed”, never “zero”.",
+            "A typed service layer normalises CoinGecko responses (null-safe numbers, sparkline series) before any component renders them.",
+            "Market table with search, gainers/losers/trending filters, sorting by market cap, price or 24h change, and a watchlist saved in localStorage.",
+            "Recharts area charts, sparklines and allocation charts, plus a market heatmap, with data refreshed every 30–60 seconds.",
         ],
-        stack: ["Amazon EC2", "ALB", "Auto Scaling", "IAM", "Python", "boto3", "Bash", "JavaScript"],
-        githubLink: "https://github.com/kush-dabade/-ec2-failure-recovery",
-        preview: "failover",
-    },
-    {
-        slug: "roxiler-systems-assignment",
-        title: "Roxiler Systems Assignment",
-        category: "Full-stack coding challenge",
-        status: "Internship assignment",
-        summary:
-            "A store-rating platform built for the Roxiler Systems Full-Stack Intern Coding Challenge. One login serves three roles — System Administrator, Normal User and Store Owner — each with its own dashboard.",
-        highlights: [
-            "Authorization is backend-authoritative: role-checking middleware gates every protected route; frontend guards exist only for UX.",
-            "JWT in an HttpOnly cookie, with the user's role re-fetched from the database on every request.",
-            "One rating per user per store, enforced by a unique constraint on (userId, storeId).",
-            "Vitest + Supertest integration tests against real PostgreSQL; the whole stack starts with docker compose up.",
-        ],
-        stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Express", "Prisma", "PostgreSQL", "Zod", "Docker"],
-        githubLink: "https://github.com/kush-dabade/roxiler-systems-assignment",
-        preview: "ratings",
+        stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "Recharts", "TanStack Table", "React Router"],
+        repos: [{ label: "View source", href: "https://github.com/kush-dabade/coinwave" }],
+        liveLink: "https://coinwave.vercel.app",
+        preview: "coinwave",
     },
 ];

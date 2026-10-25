@@ -12,7 +12,8 @@ const ProjectSection = () => (
     >
         <Rails className="divide-y divide-line border-t border-line">
             {projects.map((project, idx) => (
-                <ProjectCard key={project.slug} project={project} position={idx + 1} flip={idx % 2 === 1} />
+                // The featured card ignores `flip`; the cards after it alternate sides.
+                <ProjectCard key={project.slug} project={project} position={idx + 1} flip={idx % 2 === 0} />
             ))}
         </Rails>
     </Section>
