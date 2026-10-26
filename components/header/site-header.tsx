@@ -10,10 +10,9 @@ import SectionLink from "../section-link";
 import { useActiveSection, usePanelDismiss } from "./hooks";
 
 const SECTIONS = [
-    { id: "projects", label: "Projects" },
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "education", label: "Education" },
+    { id: "work", label: "Work" },
+    { id: "lab", label: "Lab" },
+    { id: "profile", label: "Profile" },
     { id: "contact", label: "Contact" },
 ] as const;
 
@@ -26,7 +25,7 @@ const ThemeButton = () => {
             type="button"
             aria-label="Toggle colour theme"
             title="Toggle colour theme"
-            className="group grid h-8 w-8 place-items-center rounded-md border border-transparent text-ink-2 hover:border-line hover:text-ink"
+            className="group grid h-8 w-8 place-items-center rounded-[2px] border border-transparent text-ink-2 hover:border-line hover:text-ink"
             onClick={(e) => {
                 // Pointer clicks grow the new theme from the cursor; keyboard presses from the button.
                 const box = e.currentTarget.getBoundingClientRect();
@@ -62,10 +61,10 @@ const SiteHeader = () => {
         <>
             {/* Transparent over the top of the page, solid once it scrolls (CSS scroll timeline in globals.css). */}
             <header className="site-header sticky top-0 z-50 border-b border-line bg-canvas/80 backdrop-blur-md">
-                <div className="mx-auto max-w-300 px-3 sm:px-6">
+                <div className="mx-auto max-w-330 px-3 sm:px-6">
                     <div className="flex h-14 items-center justify-between gap-4 border-x border-line pl-5 pr-5 sm:pl-8 sm:pr-8 md:pr-6 lg:pl-12 lg:pr-10">
-                        <Link href="/" onClick={closeMenu} aria-label={`${siteConfig.name} — home`} className="group flex items-center gap-2.5 rounded-md">
-                            <span className="grid h-7 w-7 place-items-center rounded-md border border-line-strong bg-raised font-mono text-[11px] font-semibold text-ink group-hover:border-accent-line">
+                        <Link href="/" onClick={closeMenu} aria-label={`${siteConfig.name} — home`} className="group flex items-center gap-2.5 rounded-[2px]">
+                            <span className="grid h-7 w-7 place-items-center rounded-[2px] border border-line-strong bg-raised font-mono text-[11px] font-semibold text-ink group-hover:border-accent-line">
                                 {siteConfig.initials}
                             </span>
                             <span className="hidden text-sm font-medium tracking-tight sm:inline">{siteConfig.name}</span>
@@ -80,7 +79,7 @@ const SiteHeader = () => {
                                                 <motion.span
                                                     layoutId="section-highlight"
                                                     aria-hidden="true"
-                                                    className="absolute inset-0 rounded-md border border-line bg-raised"
+                                                    className="absolute inset-0 rounded-[2px] border border-line bg-raised"
                                                     transition={{ type: "spring", stiffness: 520, damping: 40 }}
                                                 />
                                             )}
@@ -90,7 +89,7 @@ const SiteHeader = () => {
                                                 onMouseEnter={() => setHovered(id)}
                                                 onFocus={() => setHovered(id)}
                                                 onBlur={() => setHovered(null)}
-                                                className={`relative block rounded-md px-3 py-1.5 text-[13px] font-medium ${highlighted === id ? "text-ink" : "text-ink-2 hover:text-ink"}`}
+                                                className={`relative block rounded-[2px] px-3 py-1.5 text-[13px] font-medium ${highlighted === id ? "text-ink" : "text-ink-2 hover:text-ink"}`}
                                             >
                                                 {label}
                                             </SectionLink>
@@ -104,7 +103,7 @@ const SiteHeader = () => {
                             <Link
                                 href="/resume"
                                 aria-current={pathname === "/resume" ? "page" : undefined}
-                                className="hidden items-center gap-1.5 rounded-md border border-line px-2.5 py-1.5 text-[13px] font-medium text-ink-2 hover:border-line-strong hover:text-ink aria-[current=page]:border-line-strong aria-[current=page]:bg-raised aria-[current=page]:text-ink sm:inline-flex"
+                                className="hidden items-center gap-1.5 rounded-[2px] border border-line px-2.5 py-1.5 text-[13px] font-medium text-ink-2 hover:border-line-strong hover:text-ink aria-[current=page]:border-line-strong aria-[current=page]:bg-raised aria-[current=page]:text-ink sm:inline-flex"
                             >
                                 <FileText aria-hidden="true" className="h-3.5 w-3.5" />
                                 Résumé
@@ -119,7 +118,7 @@ const SiteHeader = () => {
                                 aria-controls="mobile-menu"
                                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                                 onClick={() => setMenuOpen((open) => !open)}
-                                className="grid h-8 w-8 place-items-center rounded-md border border-line text-ink-2 hover:border-line-strong hover:text-ink md:hidden"
+                                className="grid h-8 w-8 place-items-center rounded-[2px] border border-line text-ink-2 hover:border-line-strong hover:text-ink md:hidden"
                             >
                                 {menuOpen ? <X aria-hidden="true" className="h-4 w-4" /> : <Menu aria-hidden="true" className="h-4 w-4" />}
                             </button>
@@ -142,7 +141,7 @@ const SiteHeader = () => {
                             transition={{ duration: 0.16 }}
                             className="absolute inset-x-0 top-full z-50 border-b border-line bg-canvas md:hidden"
                         >
-                            <div className="mx-auto max-w-300 px-3 sm:px-6">
+                            <div className="mx-auto max-w-330 px-3 sm:px-6">
                                 <ol className="border-x border-line px-2 py-3">
                                     {SECTIONS.map(({ id, label }, n) => (
                                         <li key={id}>
@@ -150,7 +149,7 @@ const SiteHeader = () => {
                                                 id={id}
                                                 onClick={closeMenu}
                                                 aria-current={current === id ? "location" : undefined}
-                                                className="flex items-baseline gap-4 rounded-lg px-3 py-3 text-[1.375rem] font-semibold tracking-[-0.02em] text-ink-2 hover:bg-wash hover:text-ink aria-[current=location]:text-ink"
+                                                className="flex items-baseline gap-4 rounded-[3px] px-3 py-3 text-[1.375rem] font-semibold tracking-[-0.02em] text-ink-2 hover:bg-wash hover:text-ink aria-[current=location]:text-ink"
                                             >
                                                 <span className="w-5 font-mono text-[12px] font-normal tracking-normal text-ink-3">{String(n + 1).padStart(2, "0")}</span>
                                                 {label}
@@ -161,7 +160,7 @@ const SiteHeader = () => {
                                         <Link
                                             href="/resume"
                                             onClick={closeMenu}
-                                            className="flex items-center gap-2 rounded-lg px-3 py-3 text-[15px] font-medium text-ink-2 hover:bg-wash hover:text-ink"
+                                            className="flex items-center gap-2 rounded-[3px] px-3 py-3 text-[15px] font-medium text-ink-2 hover:bg-wash hover:text-ink"
                                         >
                                             <FileText aria-hidden="true" className="h-4 w-4" />
                                             Résumé

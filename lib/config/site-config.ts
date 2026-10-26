@@ -15,9 +15,9 @@ export const siteConfig = {
     location: "Pune, India",
 
     hero: {
-        headline: "Building full-stack products, from idea to implementation.",
+        lead: "Full-stack developer, working from the database up.",
         intro:
-            "I build web applications with React, TypeScript, Node.js and PostgreSQL, with a growing focus on backend architecture and cloud infrastructure. I enjoy turning ideas into working products and understanding the engineering decisions behind them.",
+            "Tenancy, transactions, background jobs and realtime underneath; clean, usable interfaces on top. Fig. 1 is my flagship project, TeamOS, taken apart.",
     },
 
     about: [

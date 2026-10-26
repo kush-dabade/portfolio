@@ -9,7 +9,7 @@ const Mark = ({ at }: { at: string }) => (
 
 const SectionBreak = () => (
     <div aria-hidden="true" className="border-t border-line">
-        <div className="mx-auto max-w-300 px-3 sm:px-6">
+        <div className="mx-auto max-w-330 px-3 sm:px-6">
             <div className="relative">
                 <Mark at="left-0" />
                 <Mark at="left-full" />

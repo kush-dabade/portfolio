@@ -1,8 +1,7 @@
 import Hero from "@/components/home/hero";
-import AboutSection from "@/components/home/about-section";
-import SkillsSection from "@/components/home/skills-section";
 import ProjectSection from "@/components/home/project-section";
-import EducationSection from "@/components/home/education-section";
+import LabSection from "@/components/home/lab-section";
+import ProfileSection from "@/components/home/profile-section";
 import ContactSection from "@/components/home/contact-section";
 import SectionBreak from "@/components/section-break";
 import { siteConfig } from "@/lib/config/site-config";
@@ -36,14 +35,11 @@ export default function Home() {
       <SectionBreak />
       <ProjectSection />
       <SectionBreak />
-      <AboutSection />
+      <LabSection />
       <SectionBreak />
-      <SkillsSection />
-      <SectionBreak />
-      <EducationSection />
+      <ProfileSection />
       <SectionBreak />
       <ContactSection hasResume={resumeAvailable} />
-      <SectionBreak />
     </>
   );
 }

@@ -124,8 +124,8 @@ export const projects: Project[] = [
                 body: "List endpoints take search, filter and pagination parameters over joined queries; the Refine data provider maps table state onto them.",
             },
             {
-                title: "Roles and protection",
-                body: "Better Auth email/password sessions with admin, teacher and student roles, plus Arcjet bot protection and per-role rate limits.",
+                title: "Auth and protection",
+                body: "Better Auth email/password sign-in with student, teacher and admin roles. Arcjet bot detection and a sliding-window rate limit run in front of every API route.",
             },
         ],
         stack: ["React", "TypeScript", "Refine", "shadcn/ui", "Zod", "Express", "Drizzle ORM", "PostgreSQL", "Better Auth", "Arcjet"],
@@ -141,7 +141,7 @@ export const projects: Project[] = [
                 href: "https://github.com/kush-dabade/university-management-backend",
             },
         ],
-        note: "Department, enrollment and statistics endpoints are written but not yet mounted in the API server.",
+        note: "Department, enrollment and statistics routers are written but not mounted in the API server, and the API routes don't read the session yet — so the per-role rate limits all resolve to the guest tier.",
     },
     {
         slug: "coinwave",

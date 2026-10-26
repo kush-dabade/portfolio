@@ -51,7 +51,7 @@ const TeamOSViews = () => {
     return (
         <figure>
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3 sm:mb-5">
-                <div role="tablist" aria-label="TeamOS screens" className="inline-flex rounded-lg border border-line bg-canvas p-1">
+                <div role="tablist" aria-label="TeamOS screens" className="inline-flex border border-line bg-canvas p-1">
                     {VIEWS.map((view, i) => (
                         <button
                             key={view.id}
@@ -64,7 +64,7 @@ const TeamOSViews = () => {
                             tabIndex={active === view.id ? 0 : -1}
                             onClick={() => setActive(view.id)}
                             onKeyDown={(e) => onKeyDown(e, i)}
-                            className="rounded-md px-3 py-1.5 text-[13px] font-medium text-ink-2 hover:text-ink aria-selected:bg-raised aria-selected:text-ink"
+                            className="px-3 py-1.5 text-[13px] font-medium text-ink-2 hover:text-ink aria-selected:bg-raised aria-selected:text-ink"
                         >
                             {view.label}
                         </button>
@@ -77,7 +77,7 @@ const TeamOSViews = () => {
                 id="teamos-view"
                 role="tabpanel"
                 aria-labelledby={`teamos-tab-${active}`}
-                className="group/frame relative aspect-[4/3] overflow-hidden rounded-xl border border-line-strong bg-surface shadow-frame sm:aspect-[1438/640]"
+                className="group/frame relative aspect-[4/3] overflow-hidden rounded-[4px] border border-line-strong bg-surface shadow-frame sm:aspect-[1438/640]"
             >
                 {VIEWS.map((view) => (
                     <Image

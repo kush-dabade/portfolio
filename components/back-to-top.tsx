@@ -40,7 +40,7 @@ const BackToTop = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ duration: 0.15 }}
-                        className="fixed bottom-6 right-6 z-40 hidden h-10 w-10 place-items-center rounded-lg border border-line bg-canvas/90 text-ink-3 backdrop-blur-sm hover:border-line-strong hover:text-ink md:grid"
+                        className="fixed bottom-6 right-6 z-40 hidden h-10 w-10 place-items-center rounded-[3px] border border-line bg-canvas/90 text-ink-3 backdrop-blur-sm hover:border-line-strong hover:text-ink md:grid"
                     >
                         <ArrowUp aria-hidden="true" className="h-4 w-4" />
                     </motion.button>

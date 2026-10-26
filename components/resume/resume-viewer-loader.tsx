@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const ResumeViewer = dynamic(() => import("./resume-viewer"), {
     ssr: false,
     loading: () => (
-        <div className="flex h-[75vh] min-h-120 items-center justify-center rounded-lg border border-line font-mono text-sm text-ink-3">
+        <div className="flex h-[75vh] min-h-120 items-center justify-center rounded-[3px] border border-line font-mono text-sm text-ink-3">
             Loading PDF viewer…
         </div>
     ),

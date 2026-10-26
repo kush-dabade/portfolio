@@ -20,26 +20,10 @@ export const ProjectMeta = ({ project, position }: { project: Project; position:
             {project.category}
         </span>
         <span className="inline-flex items-center gap-2 text-ink-2">
-            <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${tones[project.status.tone]}`} />
+            <span aria-hidden="true" className={`h-1.5 w-1.5 ${tones[project.status.tone]}`} />
             {project.status.label}
         </span>
     </p>
-);
-
-// Project name with its one-line description beneath.
-export const ProjectTitle = ({ project, size = "lg" }: { project: Project; size?: "xl" | "lg" }) => (
-    <>
-        <h3
-            id={`project-${project.slug}`}
-            className={`mt-6 font-semibold text-ink ${size === "xl"
-                ? "text-[clamp(3.1rem,1.9rem+5vw,6rem)] leading-[0.92] tracking-[-0.05em]"
-                : "text-[clamp(2rem,1.45rem+2.6vw,3.4rem)] leading-[1] tracking-[-0.04em]"
-                }`}
-        >
-            {project.name}
-        </h3>
-        <p className="mt-3 text-lg text-ink-2 sm:text-xl">{project.tagline}</p>
-    </>
 );
 
 // Repository links as full-width rows — label, what's in it, and an arrow — so
@@ -52,7 +36,7 @@ export const RepoLinks = ({ project }: { project: Project }) => (
                     href={repo.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group -mx-2 flex items-center gap-4 rounded-md px-2 py-3.5 hover:bg-wash"
+                    className="group -mx-2 flex items-center gap-4 rounded-[2px] px-2 py-3.5 hover:bg-wash"
                 >
                     <FaGithub aria-hidden="true" className="h-[18px] w-[18px] shrink-0 text-ink-2 group-hover:text-ink" />
                     <span className="min-w-0 flex-1">
@@ -104,7 +88,7 @@ export const StackLine = ({ stack, className = "" }: { stack: string[]; classNam
 );
 
 export const StatusNote = ({ note }: { note: string }) => (
-    <p className="flex gap-3 rounded-lg border border-line bg-inset px-4 py-3.5 text-[14px] leading-relaxed text-ink-2">
+    <p className="flex gap-3 border-l-2 border-warn bg-inset px-4 py-3.5 text-[14px] leading-relaxed text-ink-2">
         <Info aria-hidden="true" className="mt-[3px] h-4 w-4 shrink-0 text-warn" />
         <span>
             <span className="font-medium text-ink">Status: </span>

@@ -28,14 +28,14 @@ const PdfPreview = () => {
     }, []);
 
     const controlClass =
-        "flex h-8 w-8 items-center justify-center rounded-md border border-line bg-canvas text-ink-2 hover:border-line-strong hover:text-ink disabled:cursor-not-allowed disabled:opacity-40";
+        "flex h-8 w-8 items-center justify-center rounded-[2px] border border-line bg-canvas text-ink-2 hover:border-line-strong hover:text-ink disabled:cursor-not-allowed disabled:opacity-40";
 
     const status = (text: string) => (
         <div className="flex h-96 items-center justify-center font-mono text-sm text-ink-3">{text}</div>
     );
 
     return (
-        <div className="overflow-hidden rounded-lg border border-line bg-canvas">
+        <div className="overflow-hidden rounded-[3px] border border-line bg-canvas">
             <div className="flex items-center justify-between gap-3 border-b border-line bg-raised px-3 py-2">
                 <span className="font-mono text-[11px] text-ink-3">
                     {numPages > 0 ? `${numPages} page${numPages > 1 ? "s" : ""}` : "PDF preview"}

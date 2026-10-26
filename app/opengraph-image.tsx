@@ -5,12 +5,13 @@ export const alt = `${siteConfig.name} — portfolio`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Generated at build time: the same drawing grid, two-tone headline and accent as the site's hero.
+// Generated at build time: the cover sheet in miniature — paper, zone border,
+// the name in heavy capitals and one vermilion mark.
 export default function OpengraphImage() {
-  const grid = "rgba(255,255,255,0.055)";
-  const { headline } = siteConfig.hero;
-  const cut = headline.indexOf(", ");
-  const [lead, tail] = cut === -1 ? [headline, ""] : [headline.slice(0, cut + 1), headline.slice(cut + 2)];
+  const ink = "#141412";
+  const line = "#d8d4c8";
+  const accent = "#bb3508";
+  const zones = "ABCDEFGHJKLM".split("");
 
   return new ImageResponse(
     (
@@ -20,29 +21,37 @@ export default function OpengraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "64px 72px",
-          background: "#09090b",
-          backgroundImage: `linear-gradient(to right, ${grid} 1px, transparent 1px), linear-gradient(to bottom, ${grid} 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
-          color: "#f4f4f5",
+          background: "#f1efe8",
+          color: ink,
           fontFamily: "sans-serif",
+          padding: 28,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 26 }}>
-          <div style={{ display: "flex", fontWeight: 600 }}>{siteConfig.name}</div>
-          <div style={{ display: "flex", width: 32, height: 2, background: "rgba(255,255,255,0.2)" }} />
-          <div style={{ display: "flex", color: "#a3a5ad" }}>{siteConfig.role}</div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", fontSize: 84, fontWeight: 600, letterSpacing: "-0.045em", lineHeight: 1 }}>
-          <div style={{ display: "flex" }}>{lead}</div>
-          <div style={{ display: "flex", color: "#80828c" }}>{tail}</div>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 22, color: "#a3a5ad" }}>
-          <div style={{ display: "flex" }}>TeamOS · University Management System · CoinWave</div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, color: "#7c94ff" }}>
-            <div style={{ width: 10, height: 10, borderRadius: 999, background: "#7c94ff" }} />
-            github.com/kush-dabade
+        <div style={{ display: "flex", flex: 1, flexDirection: "column", border: `2px solid ${ink}` }}>
+          <div style={{ display: "flex", height: 34, borderBottom: `1px solid ${line}`, fontSize: 14, color: "#63625a" }}>
+            <div style={{ display: "flex", alignItems: "center", padding: "0 16px", borderRight: `1px solid ${line}`, letterSpacing: 2 }}>
+              SHEET 00 — COVER
+            </div>
+            {zones.map((z) => (
+              <div key={z} style={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center", borderRight: `1px solid ${line}` }}>
+                {z}
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", flex: 1, flexDirection: "column", justifyContent: "space-between", padding: "40px 48px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 22, letterSpacing: 2, color: "#47463f" }}>
+              <div style={{ width: 14, height: 14, background: accent }} />
+              {siteConfig.role.toUpperCase()} / {siteConfig.location.toUpperCase()}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", fontSize: 150, fontWeight: 800, letterSpacing: -6, lineHeight: 0.86 }}>
+              <div style={{ display: "flex" }}>KUSH</div>
+              <div style={{ display: "flex" }}>DABADE</div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", fontSize: 24, color: "#47463f" }}>
+              <div style={{ display: "flex", maxWidth: 640 }}>{siteConfig.hero.lead}</div>
+              <div style={{ display: "flex", color: accent }}>github.com/kush-dabade</div>
+            </div>
           </div>
         </div>
       </div>

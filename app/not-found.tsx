@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SectionBreak from "@/components/section-break";
-import { Rails, RailsFiller, gutter } from "@/components/section";
+import { Rails, RailsFiller, SheetZones, gutter } from "@/components/section";
 import { ArrowRight, FileText, FolderGit2, Home } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 };
 
 const routes = [
-  { title: "Home", subtitle: "Projects, about, skills, education and contact", href: "/", icon: Home },
-  { title: "Projects", subtitle: "TeamOS, University Management System and CoinWave", href: "/#projects", icon: FolderGit2 },
+  { title: "Home", subtitle: "Work, lab, profile and contact", href: "/", icon: Home },
+  { title: "Work", subtitle: "TeamOS, University Management System, CoinWave and the lab", href: "/#work", icon: FolderGit2 },
   { title: "Résumé", subtitle: "View or download the PDF", href: "/resume", icon: FileText },
 ];
 
@@ -18,6 +18,7 @@ export default function PageNotFound() {
   return (
     <>
       <Rails>
+        <SheetZones sheet="Sheet 404 — Missing" />
         <div className={`pb-12 pt-16 sm:pt-24 lg:pb-16 lg:pt-28 ${gutter}`}>
           <p className="mb-5 font-mono text-[13px] text-ink-3">
             <span className="text-accent">404</span> · Not found
@@ -37,7 +38,7 @@ export default function PageNotFound() {
             href={href}
             className={`group flex items-center gap-4 py-5 hover:bg-wash ${gutter}`}
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-raised text-ink-2 group-hover:text-ink">
+            <span className="flex h-10 w-10 items-center justify-center border border-line bg-raised text-ink-2 group-hover:text-ink">
               <Icon className="h-4 w-4" aria-hidden="true" />
             </span>
             <span className="flex-1">

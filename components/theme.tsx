@@ -54,7 +54,7 @@ type ThemeApi = {
 const ThemeCtx = createContext<ThemeApi | null>(null);
 
 export const ThemeRoot = ({ children }: { children: React.ReactNode }) => {
-    const theme = useSyncExternalStore(watchTheme, readTheme, () => "dark" as const);
+    const theme = useSyncExternalStore(watchTheme, readTheme, () => "light" as const);
     const toggle: ThemeApi["toggle"] = (origin) => switchTheme(theme === "dark" ? "light" : "dark", origin);
 
     return (

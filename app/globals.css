@@ -4,59 +4,60 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------------------
-   Palette
-   canvas → inset → raised is the surface ladder; `surface` is what frames and
-   cards sit on. ink, ink-2 and ink-3 are the three text weights (ink-3 still
-   clears 4.5:1 on every surface); line is the hairline everything is drawn
-   with. One accent — an electric ultramarine — and two status colours.
+   Palette — "working drawings"
+   Light is drafting paper; dark is the same sheet on a lightbox. canvas →
+   inset → raised is the surface ladder; `surface` is the lighter stock that
+   figures and frames sit on. ink, ink-2, ink-3 are the three pen weights
+   (ink-3 still clears 4.5:1 on every surface); line is the hairline. One
+   accent: vermilion, the colour of a redline mark-up.
    --------------------------------------------------------------------------- */
 
 :root {
-  --canvas: #fafaf9;
-  --inset: #f3f3f1;
-  --raised: #ebebe8;
-  --surface: #ffffff;
+  --canvas: #f1efe8;
+  --inset: #e9e6dd;
+  --raised: #e2dfd5;
+  --surface: #f8f7f2;
 
-  --ink: #0b0b0d;
-  --ink-2: #45464d;
-  --ink-3: #66686f;
+  --ink: #141412;
+  --ink-2: #47463f;
+  --ink-3: #63625a;
 
-  --line: #e0e0dc;
-  --line-strong: rgb(0 0 0 / 0.16);
-  --grid: rgb(0 0 0 / 0.055);
-  --wash: rgb(0 0 0 / 0.035);
+  --line: #d8d4c8;
+  --line-strong: rgb(20 20 18 / 0.22);
+  --grid: rgb(20 20 18 / 0.055);
+  --wash: rgb(20 20 18 / 0.04);
 
-  --accent: #2e4dff;
-  --accent-soft: rgb(46 77 255 / 0.08);
-  --accent-line: rgb(46 77 255 / 0.42);
-  --ok: #15803d;
-  --warn: #b45309;
+  --accent: #bb3508;
+  --accent-soft: rgb(187 53 8 / 0.08);
+  --accent-line: rgb(187 53 8 / 0.45);
+  --ok: #2c7a3a;
+  --warn: #9a5b00;
 
-  --shadow-frame: 0 1px 2px rgb(16 18 27 / 0.06), 0 28px 56px -28px rgb(16 18 27 / 0.28);
+  --shadow-frame: 0 1px 2px rgb(30 26 18 / 0.06), 0 28px 56px -30px rgb(30 26 18 / 0.32);
 }
 
 .dark {
   color-scheme: dark;
 
-  --canvas: #09090b;
-  --inset: #0d0e11;
-  --raised: #16171b;
-  --surface: #111215;
+  --canvas: #0e0e0d;
+  --inset: #121211;
+  --raised: #1b1b19;
+  --surface: #161614;
 
-  --ink: #f4f4f5;
-  --ink-2: #a3a5ad;
-  --ink-3: #80828c;
+  --ink: #eeece5;
+  --ink-2: #aba89e;
+  --ink-3: #868479;
 
-  --line: #1f2024;
-  --line-strong: rgb(255 255 255 / 0.15);
-  --grid: rgb(255 255 255 / 0.045);
-  --wash: rgb(255 255 255 / 0.03);
+  --line: #262522;
+  --line-strong: rgb(238 236 229 / 0.17);
+  --grid: rgb(238 236 229 / 0.045);
+  --wash: rgb(238 236 229 / 0.035);
 
-  --accent: #7c94ff;
-  --accent-soft: rgb(124 148 255 / 0.1);
-  --accent-line: rgb(124 148 255 / 0.45);
-  --ok: #4ade80;
-  --warn: #fbbf24;
+  --accent: #ff6a3d;
+  --accent-soft: rgb(255 106 61 / 0.1);
+  --accent-line: rgb(255 106 61 / 0.45);
+  --ok: #6fd385;
+  --warn: #f2b84b;
 
   --shadow-frame: 0 0 0 1px rgb(255 255 255 / 0.02), 0 32px 64px -32px rgb(0 0 0 / 0.9);
 }
@@ -80,8 +81,9 @@
 
   --shadow-frame: var(--shadow-frame);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -106,10 +108,6 @@
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.6;
-    /* Inter's optical-size axis is loaded, so large headings get the tighter
-       display cut automatically. */
-    font-optical-sizing: auto;
-    font-feature-settings: "cv11", "ss01", "ss03";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -143,7 +141,7 @@
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 6px;
+    border-radius: 1px;
   }
 
   ::selection {
@@ -165,6 +163,16 @@
     background-position: -1px -1px;
   }
 
+  /* Cover lettering: Archivo run condensed (its width axis is loaded). */
+  .font-display {
+    font-stretch: 72%;
+  }
+
+  /* Section-cut hatching: what a drawing uses for "cut material". */
+  .hatch {
+    background-image: repeating-linear-gradient(135deg, var(--line-strong) 0 1px, transparent 1px 7px);
+  }
+
   .fade-right {
     mask-image: radial-gradient(ellipse 75% 85% at 85% 30%, black 20%, transparent 80%);
   }
@@ -172,6 +180,23 @@
   .fade-edges {
     mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 40%, transparent 95%);
   }
+
+  /* Code excerpts (components/code.tsx tokenises on the server). Comments are
+     set in the caption serif, like margin notes on a drawing. */
+  .code-block {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: var(--ink-2);
+    tab-size: 2;
+  }
+
+  .code-block .tk-kw { color: var(--ink-3); }
+  .code-block .tk-fn { color: var(--ink); font-weight: 500; }
+  .code-block .tk-str { color: var(--accent); }
+  .code-block .tk-num { color: var(--accent); }
+  .code-block .tk-com { color: var(--ink-3); font-family: var(--font-serif); font-style: italic; font-size: 14.5px; }
+  .code-block .tk-mark { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); }
 
   /* Underline that draws in from the left on hover — used for large text links. */
   .draw-underline {
@@ -230,6 +255,106 @@
   .reveal-on [data-reveal="frame"]:not([data-shown]) img {
     scale: 1.04;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Figures — the drawn diagrams (components/figure/*). Strokes never scale:
+   a hairline stays one pixel however a plate is skewed.
+   --------------------------------------------------------------------------- */
+
+@layer components {
+  .exploded svg * {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .fig-axis {
+    stroke: var(--ink-3);
+    stroke-width: 1;
+    stroke-dasharray: 18 4 3 4;
+    opacity: 0.7;
+  }
+
+  .fig-face {
+    fill: var(--surface);
+    stroke: var(--line-strong);
+    stroke-width: 1;
+    transition: stroke 300ms ease, fill 300ms ease;
+  }
+
+  .fig-side-f { fill: var(--inset); stroke: var(--line-strong); stroke-width: 1; }
+  .fig-side-r { fill: var(--raised); stroke: var(--line-strong); stroke-width: 1; }
+
+  .fig-line { fill: none; stroke: var(--line-strong); stroke-width: 1; }
+  .fig-dash { fill: none; stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 4 3; }
+  .fig-hatch-line { stroke: var(--line-strong); stroke-width: 1; }
+  .fig-dot { fill: var(--line-strong); }
+  .fig-ring { fill: none; stroke: var(--line-strong); stroke-width: 1; transition: stroke 300ms ease; }
+  .fig-hole { fill: var(--canvas); stroke: var(--line-strong); stroke-width: 1; }
+  .fig-zone, .fig-new, .fig-job { fill: none; stroke: var(--line-strong); stroke-width: 1; transition: stroke 300ms ease, fill 300ms ease; }
+
+  .fig-ink { fill: var(--ink); }
+  .fig-ink-2 { fill: var(--ink-2); }
+  .fig-ink-3 { fill: var(--ink-3); }
+  .fig-accent, .fig-commit { fill: var(--ink-3); transition: fill 300ms ease; }
+  .fig-num { fill: var(--ink-3); transition: fill 300ms ease; }
+
+  /* The plate the request is on: a redline outline, its key parts marked. */
+  .fig-plate[data-active] .fig-face { stroke: var(--accent); }
+  .fig-plate[data-active] .fig-num,
+  .fig-plate[data-active] .fig-accent,
+  .fig-plate[data-active] .fig-commit { fill: var(--accent); }
+  .fig-plate[data-active] .fig-zone,
+  .fig-plate[data-active] .fig-new,
+  .fig-plate[data-active] .fig-job { stroke: var(--accent); fill: var(--accent-soft); }
+  .fig-plate[data-active] .fig-ring { stroke: var(--accent-line); }
+
+  .fig-packet { fill: var(--accent); }
+  .fig-halo { fill: none; stroke: var(--accent-line); stroke-width: 1; }
+  .fig-rise { stroke: var(--accent); stroke-width: 1.25; stroke-dasharray: 2 4; }
+
+  .fig-leader { fill: none; stroke: var(--line-strong); stroke-width: 1; transition: stroke 300ms ease; }
+  .fig-leader[data-active] { stroke: var(--accent); }
+  .fig-label { cursor: default; }
+  .fig-label-num { fill: var(--ink-3); transition: fill 300ms ease; }
+  .fig-label-title { fill: var(--ink); font-weight: 600; letter-spacing: -0.01em; }
+  .fig-label-detail { fill: var(--ink-3); }
+  .fig-label[data-active] .fig-label-num,
+  .fig-label[data-active] .fig-label-title { fill: var(--accent); }
+}
+
+/* CoinWave's polling trace: the sweep line crosses three minutes in 18 s. */
+.cadence-sweep {
+  left: 0;
+  animation: cadence-sweep 18s linear infinite;
+}
+
+@keyframes cadence-sweep {
+  to {
+    left: 100%;
+  }
+}
+
+/* Traffic on a wire: dashes that march toward the destination. */
+.flow-line {
+  background-image: repeating-linear-gradient(180deg, var(--ink-3) 0 4px, transparent 4px 8px);
+  background-size: 1px 8px;
+  animation: flow-down 0.7s linear infinite;
+}
+
+@media (min-width: 48rem) {
+  .flow-line {
+    background-image: repeating-linear-gradient(90deg, var(--ink-3) 0 4px, transparent 4px 8px);
+    background-size: 8px 1px;
+    animation-name: flow-right;
+  }
+}
+
+@keyframes flow-down {
+  to { background-position: 0 8px; }
+}
+
+@keyframes flow-right {
+  to { background-position: 8px 0; }
 }
 
 /* Header: transparent over the hero, solid once the page moves. Browsers
@@ -317,6 +442,10 @@
 
   .reveal-on [data-reveal="frame"]:not([data-shown]) img {
     scale: none;
+  }
+
+  .cadence-sweep {
+    display: none;
   }
 
   /* Scroll-linked, not time-based: the global rule above would freeze it. */

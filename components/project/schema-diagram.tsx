@@ -139,7 +139,7 @@ const Diagram = ({ layout, id, className }: { layout: Layout; id: string; classN
                 const h = boxHeight(entity);
                 return (
                     <g key={entity}>
-                        <rect x={x + 0.5} y={y + 0.5} width={w - 1} height={h - 1} rx={8} className="fill-surface stroke-line-strong" />
+                        <rect x={x + 0.5} y={y + 0.5} width={w - 1} height={h - 1} rx={2} className="fill-surface stroke-line-strong" />
                         <path d={`M${x + 0.5},${y + HEAD} H${x + w - 0.5}`} className="stroke-line-strong" />
                         <text x={x + 12} y={y + 18.5} fontSize={12} className="fill-ink" fontWeight={600}>
                             {entity}
@@ -180,8 +180,8 @@ const SchemaDiagram = () => (
     <figure className="mx-auto w-full min-w-0">
         <Diagram layout={WIDE} id="ums-schema-wide" className="mx-auto hidden max-w-[44rem] md:block" />
         <Diagram layout={STACKED} id="ums-schema-stacked" className="mx-auto max-w-[22rem] md:hidden" />
-        <figcaption className="mt-6 text-center font-mono text-[12.5px] text-ink-3">
-            Drawn from the Drizzle schema · backend/src/db/schema
+        <figcaption className="mt-6 text-center font-serif text-[16px] italic text-ink-3">
+            Fig. 2 — The data model, drawn from the Drizzle schema in backend/src/db/schema.
         </figcaption>
     </figure>
 );

@@ -26,7 +26,7 @@ const CopyEmailButton = ({ email }: { email: string }) => {
         <button
             type="button"
             onClick={handleCopy}
-            className={`inline-flex h-11 items-center gap-2 rounded-lg border px-4 text-sm font-medium active:translate-y-px ${status === "copied"
+            className={`inline-flex h-11 items-center gap-2 rounded-[3px] border px-4 text-sm font-medium active:translate-y-px ${status === "copied"
                 ? "border-accent-line bg-accent-soft text-accent"
                 : "border-line-strong text-ink hover:bg-raised"
                 }`}

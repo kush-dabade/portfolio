@@ -2,7 +2,7 @@ import { ArrowRight, ArrowUpRight, FileText } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
 import { siteConfig } from "@/lib/config/site-config";
-import { Rails, SectionLabel, gutter } from "../section";
+import { Rails, SheetZones, gutter } from "../section";
 import Reveal from "../reveal";
 import CopyEmailButton from "../copy-email-button";
 import { nudgeOut, nudgeRight } from "../ui";
@@ -56,15 +56,16 @@ const ContactSection = ({ hasResume }: { hasResume: boolean }) => {
     return (
         <section id="contact" aria-labelledby="contact-title" tabIndex={-1} className="outline-none">
             <Rails className="relative overflow-hidden">
-                <div className="blueprint fade-right pointer-events-none absolute inset-0" aria-hidden="true" />
+                <SheetZones sheet="Sheet 06 — Contact" />
+                <div className="blueprint fade-right pointer-events-none absolute inset-0 top-7" aria-hidden="true" />
                 <Reveal className={`relative grid gap-y-6 pb-16 pt-20 lg:grid-cols-12 lg:gap-x-8 lg:pb-20 lg:pt-28 ${gutter}`}>
-                    <div className="lg:col-span-3 lg:pt-[1.1rem]">
-                        <SectionLabel index="05">Contact</SectionLabel>
-                    </div>
+                    <p className="font-mono text-[12px] text-ink-3 lg:col-span-3 lg:pt-4">
+                        <span className="text-accent">06</span> / Contact
+                    </p>
                     <div className="lg:col-span-9">
                         <h2
                             id="contact-title"
-                            className="text-[clamp(2.4rem,1.4rem+4.2vw,5rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-ink"
+                            className="font-display text-[clamp(3.6rem,1.4rem+8vw,8.5rem)] uppercase leading-[0.82] tracking-[-0.025em] text-ink [font-weight:760]"
                         >
                             Get in touch.
                         </h2>
@@ -76,7 +77,7 @@ const ContactSection = ({ hasResume }: { hasResume: boolean }) => {
                         <div className="mt-12 flex flex-col items-start gap-5 lg:mt-16">
                             <a
                                 href={`mailto:${email}`}
-                                className="draw-underline max-w-full pb-1 text-[clamp(1.45rem,0.75rem+3.6vw,3.6rem)] font-medium leading-tight tracking-[-0.035em] text-ink hover:text-accent"
+                                className="draw-underline max-w-full break-all pb-1 text-[clamp(1.45rem,0.75rem+3.6vw,3.4rem)] font-medium leading-tight tracking-[-0.03em] text-ink hover:text-accent sm:break-normal"
                             >
                                 {email}
                                 <span className="sr-only"> (opens your email app)</span>
