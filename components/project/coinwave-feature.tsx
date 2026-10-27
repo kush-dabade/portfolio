@@ -3,43 +3,47 @@ import type { Project } from "@/lib/data/projects";
 import Reveal from "../reveal";
 import { Rails, SheetZones, gutter } from "../section";
 import { LiveLink, NoteGrid, ProjectMeta, RepoLinks, StackLine } from "./parts";
-import Cadence from "./cadence";
+import CandleSource from "./candle-source";
 
 // The visual counterpoint to TeamOS: instead of a centred, framed product shot,
-// the Markets page bleeds off the stage, with the Dashboard's volume chart laid
-// over its corner. Both are captures of the live deployment.
+// Chart Studio bleeds off the stage, with the Intelligence page's breadth panel
+// laid over its corner. Both are captures of the live deployment.
 const CoinWaveFeature = ({ project, position }: { project: Project; position: number }) => (
     <article id={project.slug} aria-labelledby={`project-${project.slug}`} tabIndex={-1} className="outline-none">
         <Rails>
             <SheetZones sheet="Sheet 03 — CoinWave" />
             <div className="grid lg:grid-cols-12">
-                <div className="relative order-last aspect-[6/5] min-w-0 overflow-hidden border-t border-line bg-inset sm:aspect-[16/11] lg:order-first lg:col-span-7 lg:aspect-auto lg:min-h-[38rem] lg:border-r lg:border-t-0">
-                    <Reveal variant="frame" className="absolute left-[6%] top-[8%] w-[125%] lg:left-12 lg:top-14 lg:w-[128%]">
-                        <div className="group/frame relative aspect-[1440/900] overflow-hidden rounded-[4px] border border-line-strong bg-surface shadow-frame">
-                            <Image
-                                src="/images/projects/coinwave-markets.webp"
-                                alt="CoinWave markets page: total market cap, 24h volume and BTC dominance cards, the top gainer, trending coins, filters and a market table with 7-day sparklines"
-                                fill
-                                sizes="(min-width: 1200px) 900px, (min-width: 1024px) 75vw, 125vw"
-                                className="object-cover object-left-top transition-[scale] duration-[1400ms] ease-out-soft group-hover/frame:scale-[1.015]"
-                            />
-                        </div>
-                    </Reveal>
-                    <Reveal
-                        variant="frame"
-                        delay={0.15}
-                        className="absolute bottom-[6%] left-[4%] w-[64%] lg:bottom-12 lg:left-8 lg:w-[66%]"
-                    >
-                        <div className="relative aspect-[935/274] overflow-hidden rounded-[3px] border border-line-strong bg-surface shadow-frame">
-                            <Image
-                                src="/images/projects/coinwave-volume.webp"
-                                alt="CoinWave dashboard detail: a 24-hour volume area chart beside a list of trending currencies with prices and daily change"
-                                fill
-                                sizes="(min-width: 1024px) 460px, 64vw"
-                                className="object-cover object-left-top transition-[scale] duration-[1400ms] ease-out-soft"
-                            />
-                        </div>
-                    </Reveal>
+                <div className="@container relative order-last aspect-[6/5] min-w-0 overflow-hidden border-t border-line bg-inset sm:aspect-[16/11] lg:order-first lg:col-span-7 lg:aspect-auto lg:min-h-[38rem] lg:border-r lg:border-t-0">
+                    {/* On wide screens the pair is sized off the column width and centred, so the
+                        overlay stays on the main shot however tall the text column grows. */}
+                    <div className="absolute inset-0 lg:inset-x-0 lg:bottom-auto lg:top-1/2 lg:h-[92cqi] lg:-translate-y-1/2">
+                        <Reveal variant="frame" className="absolute left-[6%] top-[8%] w-[125%] lg:left-12 lg:top-0 lg:w-[128%]">
+                            <div className="group/frame relative aspect-[1440/900] overflow-hidden rounded-[4px] border border-line-strong bg-surface shadow-frame">
+                                <Image
+                                    src="/images/projects/coinwave-chart.webp"
+                                    alt="CoinWave Chart Studio: Bitcoin daily candles from the Binance BTC/USDT pair with 20- and 50-day moving averages, a volume pane and RSI, under a toolbar of intervals, chart types and indicators"
+                                    fill
+                                    sizes="(min-width: 1200px) 900px, (min-width: 1024px) 75vw, 125vw"
+                                    className="object-cover object-left-top transition-[scale] duration-[1400ms] ease-out-soft group-hover/frame:scale-[1.015]"
+                                />
+                            </div>
+                        </Reveal>
+                        <Reveal
+                            variant="frame"
+                            delay={0.15}
+                            className="absolute bottom-[6%] left-[4%] w-[58%] lg:bottom-0 lg:left-8 lg:w-[54%]"
+                        >
+                            <div className="relative aspect-[1164/616] overflow-hidden rounded-[3px] border border-line-strong bg-surface shadow-frame">
+                                <Image
+                                    src="/images/projects/coinwave-breadth.webp"
+                                    alt="CoinWave Intelligence detail: market breadth, the share of 215 assets rising over 1 hour to 1 year, with up/down counts, the median move and Bitcoin's move"
+                                    fill
+                                    sizes="(min-width: 1024px) 400px, 58vw"
+                                    className="object-cover object-left-top transition-[scale] duration-[1400ms] ease-out-soft"
+                                />
+                            </div>
+                        </Reveal>
+                    </div>
                 </div>
 
                 <Reveal className={`@container flex min-w-0 flex-col pb-12 pt-12 lg:col-span-5 lg:pb-14 lg:pt-16 ${gutter}`}>
@@ -63,10 +67,10 @@ const CoinWaveFeature = ({ project, position }: { project: Project; position: nu
             </div>
 
             <Reveal className={`border-t border-line py-10 lg:py-14 ${gutter}`}>
-                <Cadence />
+                <CandleSource />
             </Reveal>
             <div className="border-t border-line">
-                <NoteGrid notes={project.notes} columns="lg:grid-cols-3" />
+                <NoteGrid notes={project.notes} columns="sm:grid-cols-2 xl:grid-cols-4" />
             </div>
             <StackLine stack={project.stack} className={`border-t border-line py-6 ${gutter}`} />
         </Rails>

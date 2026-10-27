@@ -322,18 +322,6 @@
   .fig-label[data-active] .fig-label-title { fill: var(--accent); }
 }
 
-/* CoinWave's polling trace: the sweep line crosses three minutes in 18 s. */
-.cadence-sweep {
-  left: 0;
-  animation: cadence-sweep 18s linear infinite;
-}
-
-@keyframes cadence-sweep {
-  to {
-    left: 100%;
-  }
-}
-
 /* Traffic on a wire: dashes that march toward the destination. */
 .flow-line {
   background-image: repeating-linear-gradient(180deg, var(--ink-3) 0 4px, transparent 4px 8px);
@@ -442,10 +430,6 @@
 
   .reveal-on [data-reveal="frame"]:not([data-shown]) img {
     scale: none;
-  }
-
-  .cadence-sweep {
-    display: none;
   }
 
   /* Scroll-linked, not time-based: the global rule above would freeze it. */

@@ -16,7 +16,8 @@ their own source code.
     the API's real responses, the architecture decision register, and an honest status.
   - **02 University Management System** — the Drizzle data model and the API's wiring, including
     the routers that are written but not mounted.
-  - **03 CoinWave** — live-demo screens and a timing diagram of each page's polling interval.
+  - **03 CoinWave** — live-demo screens and a diagram of how a chart's candles are sourced from
+    Binance or CoinGecko.
   - **04 Lab** — two AWS practicals: a replay of the EC2 failure-recovery run from its report, and
     the CloudFormation change-set workflow.
   - **05 Profile** and **06 Contact**.
